@@ -33,14 +33,14 @@ namespace matrix
 	const static size_t maxDepth = 50;
 
 	struct RainDropElement {
+		const int x, y; //x, y coords
+		wchar_t c; // character
 
 		inline void changeRandomly(const float chance) {
-			const int x, y;
-			wchar_t c;
-
+			
 			static std::uniform_real_distribution<float> localDisF(0.0f, 1.0f);
-			if ((chance >= localDisF(mt)) {
-				c = unicodeCharacters[disI(mt)];
+			if (chance >= localDisF(mt)) {
+				c = unicodeCharacters[disI(mt)]; // sets c to a random character with the set chances
 			}
 		}
 		inline RainDropElement(const int x, const int y) : x(x) y(y), c(L' ') {
@@ -53,22 +53,38 @@ namespace matrix
 				public:
 					using raindrops_t = std::list<RainDropElement>;
 				private:
-					const int maxSize;
-					int size;
+					raindrops_t rainDropElements;  // falling charcters
+					const int maxSize; // size of column of rain
+					int size; // current size of colunm
 					const int x;
-					const int maxDepthY;
-					float changeChance{ 0.5 };
+					const int maxDepthY; // screen size
+					float changeChance{ 0.5 }; // 50% chance of change
 					int y{ 0 };
 
 				public:
 					RainDrop(int maxSize, int x, int maxDepthY, float changeChance) : maxSize(maxSize), x(x), y(0),
 						size(maxSize / 2),
 						maxDepthY(maxDepthY),
-						changeChance(changeChance) {}
+						changeChance(changeChance) {
+					}
 
 					void fall();
 
 
-	};
+					inline const raindrops_t& get() const
+					{
+						return rainDropElements;
+					}
+					inline void operator++()  //increases raindrop size
+					{
+						size = std::min(maxSize, size + 1);
+					}
+
+					inline void operator--()  // decreases raindrop saize
+					{
+						size = std::max(1, size - 1);
+					}
+
+				};
 
 }
