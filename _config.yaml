@@ -1,9 +1,5 @@
-# Site settings
-title: Digital Rain Modern C++ Project Blog
-author:
-  name: Ross Armitage
-  email: G00401655@atu.ie
-description: "A blog."
-
-# Build settings
-remote_theme: jekyll/minima
+title: Hacker theme
+description: Hacker is a theme for GitHub Pages.
+show_downloads: true
+google_analytics:
+theme: jekyll-theme-hacker
