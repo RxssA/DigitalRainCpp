@@ -26,5 +26,8 @@
     <ClInclude Include="RainDrop.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DoubleBufferedConsole.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

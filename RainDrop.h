@@ -21,9 +21,21 @@ namespace matrix
 		L'∑',L'∂',L'∏',L'∩',L'∬',L'⊕',
 		L'★',L'♠',L'♣',L'♪',L'♯',L'░',L'▓'     // got chatGPT to generate unicode characters similiar to matrix movie
 	};
+	const wchar_t unicodeCharactersSnow[]
+	{
+		L'✼',L'❋',L'❊'
+	};
+	const wchar_t unicodeCharactersBlocks[]
+	{
+		L'░',L'▓'
+	};
+	const wchar_t unicodeCharactersDiamonds[]
+	{
+		L'⬖',L'⬗',L'⬘',L'⬙',L'◈'
+	};
 
 	static std::random_device rd; // random device to seed MT
-	static std::mt19937 mt{ rd() };   //Mersenne Twister 19937
+	static std::mt19937 mt{ rd() };   //Mersenne Twister 19937 https://en.wikipedia.org/wiki/Mersenne_Twister
 
 	/*
 	 rand() % n is biased apparently so using uniform_int_distribution instead.
@@ -32,21 +44,23 @@ namespace matrix
 	static std::uniform_int_distribution<size_t> disI(0, sizeof(unicodeCharacters) / sizeof(unicodeCharacters[0]));
 	const static size_t maxDepth = 50;
 
-	struct RainDropElement {
-		const int x, y; //x, y coords
-		wchar_t c; // character
+	struct RainDropElement
+	{
+		const int x, y;  // x,y coords
+		wchar_t c;   // character
 
-		inline void changeRandomly(const float chance) {
-			
+		inline void changeRandomly(const float chance)
+		{
 			static std::uniform_real_distribution<float> localDisF(0.0f, 1.0f);
-			if (chance >= localDisF(mt)) {
-				c = unicodeCharacters[disI(mt)]; // sets c to a random character with the set chances
-			}
+			if (chance >= localDisF(mt))
+				c = unicodeCharacters[disI(mt)];
 		}
-		inline RainDropElement(const int x, const int y) : x(x) y(y), c(L' ') {
+
+		inline RainDropElement(const int x, const int y)
+			: x(x), y(y), c(L' ')
+		{
 			changeRandomly(1);
 		}
-
 	};
 
 				class RainDrop {

@@ -131,6 +131,7 @@
     <ClCompile Include="RainDrop.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DoubleBufferedConsole.h" />
     <ClInclude Include="RainDrop.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
