@@ -12,7 +12,7 @@
 
 namespace matrix
 {
-	const wchar_t unicodeCharacters[]{
+	/*const wchar_t unicodeCharacters[]{
 			 L'Ƣ',L'Ʃ',L'Ʊ',L'Ƹ',L'ǂ',L'ƽ',L'ǌ',L'Ȣ',L'Ⱦ',L'Ƚ',L'ɑ',L'ɤ',L'ʑ',
 		L'ʫ',L'ʥ',L'ʮ',L'λ',L'ε',L'Ϡ',L'Ϟ',L'Ϡ',L'ϰ',L'Є',
 		L'ʃ',L'ʘ',L'ʭ',L'ʗ',L'ʡ',L'ʖ',L'ɕ',L'ɺ',L'ɧ',L'ʄ',
@@ -20,12 +20,12 @@ namespace matrix
 		L'Ж',L'Щ',L'Ѧ',L'Җ',L'Ҩ',L'Ӝ',L'Ԇ',
 		L'∑',L'∂',L'∏',L'∩',L'∬',L'⊕',
 		L'★',L'♠',L'♣',L'♪',L'♯',L'░',L'▓'     // got chatGPT to generate unicode characters similiar to matrix movie
-	};
+	};*/
 	const wchar_t unicodeCharactersSnow[]
 	{
 		L'✼',L'❋',L'❊'
 	};
-	const wchar_t unicodeCharactersBlocks[]
+	const wchar_t unicodeCharacters[]
 	{
 		L'░',L'▓'
 	};

@@ -9,6 +9,4 @@ C:\Users\rossa\Desktop\Cpp Projects\DigitalRainCPP\DoubleBufferedConsole.h(94,5)
 C:\Users\rossa\Desktop\Cpp Projects\DigitalRainCPP\DoubleBufferedConsole.h(106,3): warning C4984: 'if constexpr' is a C++17 language extension
   (compiling source file 'Matrix.cpp')
   
-  RainDrop.cpp
-  Generating Code...
   DigitalRainCPP.vcxproj -> C:\Users\rossa\Desktop\Cpp Projects\DigitalRain\x64\Debug\DigitalRainCPP.exe

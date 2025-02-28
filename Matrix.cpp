@@ -41,7 +41,7 @@ int main()
     std::this_thread::sleep_for(std::chrono::milliseconds(16)); // delay before the chaos begins, 
 
     DoubleBufferedConsole<wchar_t> myConsole(L"Matrix"); // creates the double buffered conssole, Called it matrix
-    const auto txtAttributes = FOREGROUND_GREEN | FOREGROUND_INTENSITY; // colour green, intensifies colour.
+    const auto txtAttributes = FOREGROUND_BLUE | FOREGROUND_INTENSITY; // colour green, intensifies colour.
     short width, height;
     /* std::tie unpacks multiple returb values into seperate variables, used tuple to return multiple values
     tried using std::pair as I am only return 2 values, but couldnt get it to work?*/
@@ -57,8 +57,8 @@ int main()
     {
         for (auto& rainDrop : rainDrops)
         {
-            rainDrop.fall();
-            for (const auto& element : rainDrop.get())
+            rainDrop.fall(); //moves rain drops down
+            for (const auto& element : rainDrop.get()) // get individual rain elemnets
             {
                 if (element.y < height)
                 {
@@ -66,18 +66,18 @@ int main()
                 }
             }
 
-            if (disD(mt) <= resizeChance)
+            if (disD(mt) <= resizeChance) //90% chance of change
             {
-                if (disD(mt) <= 0.5)
+                if (disD(mt) <= 0.5)  // 50/50 chance to increase or decrease rainn drop size
                     ++rainDrop;
                 else
                     --rainDrop;
             }
         }
 
-        myConsole.flip();
-        myConsole.clear(' ', txtAttributes);
-        std::this_thread::sleep_for(refreshRate);
+        myConsole.flip(); // swaps the double buffered console to update display
+        myConsole.clear(' ', txtAttributes);  // clears console after every frame
+        std::this_thread::sleep_for(refreshRate); // waits before next frame
     }
 
     return 0;
