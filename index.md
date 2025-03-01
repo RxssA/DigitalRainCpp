@@ -4,14 +4,11 @@ layout: default
 
 **Digital Rain** is a C++ console application that simulates the iconic "Matrix" falling code effect. Using multithreading, double buffering, and randomization, the program generates cascading streams of Unicode characters that dynamically change and flow down the screen, mimicking the visual style from the Matrix movies.
 
-
-There should be whitespace between paragraphs.
-
-There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
-
-# Header 1
-
-This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
+# Features
+**Realistic Falling Code Effect** – Uses a list-based system to manage individual character streams.
+**Dynamic Character Changes** – Each raindrop element has a chance to mutate into a different symbol.
+**Adjustable Rain Stream Size** – The length of each stream varies dynamically for a more organic look.
+**Custom Unicode Characters** – Uses a selection of unique symbols to enhance the digital rain aesthetic.
 
 ## Header 2
 
