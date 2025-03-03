@@ -18,11 +18,16 @@ layout: default
 
 ### Header 3
 
-```js
-// Javascript code with syntax highlighting.
-var fun = function lang(l) {
-  dateformat.i18n = require('./lang/' + l)
-  return true;
+```c++
+void flip()
+{
+	WriteConsoleOutput(
+		buffer[++bufferIndex & 0x01],  //selects next buffer
+		charInfoBuffer,
+		bufferSize,
+		{ 0, 0 },
+		&writeRect);
+	SetConsoleActiveScreenBuffer(buffer[bufferIndex & 0x01]);
 }
 ```
 
