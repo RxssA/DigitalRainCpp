@@ -118,23 +118,42 @@ struct RainDropElement
 ### Header 3
 
 ```c++
-void flip()
-{
-	WriteConsoleOutput(
-		buffer[++bufferIndex & 0x01],  //selects next buffer
-		charInfoBuffer,
-		bufferSize,
-		{ 0, 0 },
-		&writeRect);
-	SetConsoleActiveScreenBuffer(buffer[bufferIndex & 0x01]);
-}
+class RainDrop {
+public:
+				using raindrops_t = std::list<RainDropElement>;
+private:
+				raindrops_t rainDropElements;  // falling charcters
+				const int maxSize; // size of column of rain
+				int size; // current size of colunm
+				const int x;
+				const int maxDepthY; // screen size
+				float changeChance{ 0.5 }; // 50% chance of change
+				int y{ 0 };
+				const wchar_t* charSet;
+				size_t charSetSize;
+
+public:
+				RainDrop(int maxSize, int x, int maxDepthY, float changeChance, const wchar_t* charSet, size_t charSetSize)
+					: maxSize(maxSize), x(x), y(0), size(maxSize / 2), maxDepthY(maxDepthY), changeChance(changeChance),
+					charSet(charSet), charSetSize(charSetSize) {
+				}
+				void fall();
 ```
 
-```ruby
-# Ruby code with syntax highlighting
-GitHubPages::Dependencies.gems.each do |gem, version|
-  s.add_dependency(gem, "= #{version}")
-end
+```c++
+inline const raindrops_t& get() const
+{
+				return rainDropElements;
+}
+inline void operator++()  //increases raindrop size
+{
+				size = std::min(maxSize, size + 1);
+}
+
+inline void operator--()  // decreases raindrop saize
+{
+				size = std::max(1, size - 1);
+}
 ```
 
 #### Header 4
