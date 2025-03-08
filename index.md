@@ -36,6 +36,56 @@ const wchar_t unicodeCharactersDiamonds[]
 	L'⬖',L'⬗',L'⬘',L'⬙',L'◈'
 };
 ```
+```c++
+enum class CharacterSet {
+	Standard,
+	Snow,
+	Diamonds,
+	Rain
+};
+
+inline const wchar_t* getCharacterSet(CharacterSet set) {
+	switch (set)
+	{
+	case matrix::CharacterSet::Standard:
+		return unicodeCharacters;
+		break;
+	case matrix::CharacterSet::Snow:
+		return unicodeCharactersSnow;
+		break;
+	case matrix::CharacterSet::Diamonds:
+		return unicodeCharactersDiamonds;
+		break;
+	case matrix::CharacterSet::Rain:
+		return unicodeCharactersRain;
+		break;
+	default:
+		return unicodeCharacters;
+		break;
+	}
+}
+
+static size_t getCharacterSetSize(CharacterSet set) {
+	switch (set)
+	{
+	case matrix::CharacterSet::Standard:
+		return sizeof(unicodeCharacters) / sizeof(unicodeCharacters[0]);
+		
+	case matrix::CharacterSet::Snow:
+		return sizeof(unicodeCharactersSnow) / sizeof(unicodeCharactersSnow[0]);
+		
+	case matrix::CharacterSet::Diamonds:
+		return sizeof(unicodeCharactersDiamonds) / sizeof(unicodeCharactersDiamonds[0]);
+		
+	case matrix::CharacterSet::Rain:
+		return sizeof(unicodeCharactersRain) / sizeof(unicodeCharactersRain[0]);
+		
+	default:
+		return 0;
+	}
+}
+```
+
 
 This code initializes a random number generator using a random device (rd) and Mersenne Twister (mt), defines a uniform distribution (disI) for selecting random Unicode characters, and sets a maximum depth (maxDepth = 50) for controlling the depth of the rain effect.
 ```c++
