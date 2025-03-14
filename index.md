@@ -37,6 +37,7 @@ const wchar_t unicodeCharactersDiamonds[]
 	L'⬖',L'⬗',L'⬘',L'⬙',L'◈'
 };
 ```
+This code defines two functions: getCharacterSet and getCharacterSetSize. getCharacterSet returns a pointer to a specific character set based on the provided CharacterSet enum. getCharacterSetSize calculates and returns the size of the specified character set by dividing the total size of the array by the size of its elements
 ```c++
 enum class CharacterSet {
 	Standard,
@@ -116,8 +117,7 @@ struct RainDropElement
 	}
 };
 ```
-### Header 3
-
+This code defines a RainDrop class that simulates raindrops in a column. It uses the std::list container for storing individual RainDropElement objects. Key attributes include maxSize (max size of the column), x (x-coordinate), maxDepthY (screen size), changeChance (probability of change), and charSet (character set for display). The constructor initializes these parameters, and the fall method simulates the raindrop falling.
 ```c++
 class RainDrop {
 public:
@@ -140,7 +140,9 @@ public:
 				}
 				void fall();
 ```
-
+get() returns a constant reference to the rainDropElements list, providing access to the falling raindrop elements.
+operator++() increments the size of the raindrop column, ensuring it doesn't exceed maxSize by using std::min.
+operator--() decrements the size of the raindrop column, ensuring it doesn't go below 1 by using std::max. These operators adjust the size of the column during simulation.
 ```c++
 inline const raindrops_t& get() const
 {
@@ -157,12 +159,26 @@ inline void operator--()  // decreases raindrop saize
 }
 ```
 
-#### Header 4
+#### Header 2
+The fall() method in the RainDrop class simulates the falling of raindrops:
+It iterates through each droplet in the rainDropElements list and calls changeRandomly() on each, giving them a chance to change based on changeChance.
+A new raindrop is added to the top of the screen with push_front.
+If the number of raindrop elements exceeds the current size, the oldest element is removed with pop_back.
+The y position of the raindrop is incremented. If it reaches the screen's maximum depth (maxDepthY), it resets to the top with  y = 0, simulating the continuous fall of raindrops.
+```c++
+void matrix::RainDrop::fall() {
+	for (auto& droplet : rainDropElements)
+		droplet.changeRandomly(changeChance); //iterates through all existing raindrop elements, each has a changce to change (changeChance)
+	rainDropElements.push_front({ x, y, charSet, charSetSize });  // add rain drop at the top of screen
 
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-
+	if (rainDropElements.size() > static_cast<size_t>(size)) {
+		rainDropElements.pop_back();  // removes characters that exceed size of screen.
+	}
+	 
+	if (++y >= maxDepthY) // makes rain fall
+		y = 0;  // reset
+}
+```
 ##### Header 5
 
 1.  This is an ordered list following a header.
