@@ -4,6 +4,9 @@ layout: default
 
 **Digital Rain** is a C++ console application that simulates the iconic "Matrix" falling code effect. Using multithreading, double buffering, and randomization, the program generates cascading streams of Unicode characters that dynamically change and flow down the screen, mimicking the visual style from the Matrix movies.
 
+![Branching](docs/assets/images/2025-03-1418-05-19-ezgif.com-video-to-gif-converter.gif)
+![Branching](docs/assets/images/Screenshot20250308132546.png)
+
 # Features
 **Realistic Falling Code Effect** – Uses a list-based system to manage individual character streams.
 **Dynamic Character Changes** – Each raindrop element has a chance to mutate into a different symbol.
@@ -35,6 +38,57 @@ const wchar_t unicodeCharactersDiamonds[]
 	L'⬖',L'⬗',L'⬘',L'⬙',L'◈'
 };
 ```
+This code defines two functions: getCharacterSet and getCharacterSetSize. getCharacterSet returns a pointer to a specific character set based on the provided CharacterSet enum. getCharacterSetSize calculates and returns the size of the specified character set by dividing the total size of the array by the size of its elements
+```c++
+enum class CharacterSet {
+	Standard,
+	Snow,
+	Diamonds,
+	Rain
+};
+
+inline const wchar_t* getCharacterSet(CharacterSet set) {
+	switch (set)
+	{
+	case matrix::CharacterSet::Standard:
+		return unicodeCharacters;
+		break;
+	case matrix::CharacterSet::Snow:
+		return unicodeCharactersSnow;
+		break;
+	case matrix::CharacterSet::Diamonds:
+		return unicodeCharactersDiamonds;
+		break;
+	case matrix::CharacterSet::Rain:
+		return unicodeCharactersRain;
+		break;
+	default:
+		return unicodeCharacters;
+		break;
+	}
+}
+
+static size_t getCharacterSetSize(CharacterSet set) {
+	switch (set)
+	{
+	case matrix::CharacterSet::Standard:
+		return sizeof(unicodeCharacters) / sizeof(unicodeCharacters[0]);
+		
+	case matrix::CharacterSet::Snow:
+		return sizeof(unicodeCharactersSnow) / sizeof(unicodeCharactersSnow[0]);
+		
+	case matrix::CharacterSet::Diamonds:
+		return sizeof(unicodeCharactersDiamonds) / sizeof(unicodeCharactersDiamonds[0]);
+		
+	case matrix::CharacterSet::Rain:
+		return sizeof(unicodeCharactersRain) / sizeof(unicodeCharactersRain[0]);
+		
+	default:
+		return 0;
+	}
+}
+```
+
 
 This code initializes a random number generator using a random device (rd) and Mersenne Twister (mt), defines a uniform distribution (disI) for selecting random Unicode characters, and sets a maximum depth (maxDepth = 50) for controlling the depth of the rain effect.
 ```c++
@@ -64,34 +118,68 @@ struct RainDropElement
 	}
 };
 ```
-### Header 3
-
+This code defines a RainDrop class that simulates raindrops in a column. It uses the std::list container for storing individual RainDropElement objects. Key attributes include maxSize (max size of the column), x (x-coordinate), maxDepthY (screen size), changeChance (probability of change), and charSet (character set for display). The constructor initializes these parameters, and the fall method simulates the raindrop falling.
 ```c++
-void flip()
+class RainDrop {
+public:
+				using raindrops_t = std::list<RainDropElement>;
+private:
+				raindrops_t rainDropElements;  // falling charcters
+				const int maxSize; // size of column of rain
+				int size; // current size of colunm
+				const int x;
+				const int maxDepthY; // screen size
+				float changeChance{ 0.5 }; // 50% chance of change
+				int y{ 0 };
+				const wchar_t* charSet;
+				size_t charSetSize;
+
+public:
+				RainDrop(int maxSize, int x, int maxDepthY, float changeChance, const wchar_t* charSet, size_t charSetSize)
+					: maxSize(maxSize), x(x), y(0), size(maxSize / 2), maxDepthY(maxDepthY), changeChance(changeChance),
+					charSet(charSet), charSetSize(charSetSize) {
+				}
+				void fall();
+```
+get() returns a constant reference to the rainDropElements list, providing access to the falling raindrop elements.
+operator++() increments the size of the raindrop column, ensuring it doesn't exceed maxSize by using std::min.
+operator--() decrements the size of the raindrop column, ensuring it doesn't go below 1 by using std::max. These operators adjust the size of the column during simulation.
+```c++
+inline const raindrops_t& get() const
 {
-	WriteConsoleOutput(
-		buffer[++bufferIndex & 0x01],  //selects next buffer
-		charInfoBuffer,
-		bufferSize,
-		{ 0, 0 },
-		&writeRect);
-	SetConsoleActiveScreenBuffer(buffer[bufferIndex & 0x01]);
+				return rainDropElements;
+}
+inline void operator++()  //increases raindrop size
+{
+				size = std::min(maxSize, size + 1);
+}
+
+inline void operator--()  // decreases raindrop saize
+{
+				size = std::max(1, size - 1);
 }
 ```
 
-```ruby
-# Ruby code with syntax highlighting
-GitHubPages::Dependencies.gems.each do |gem, version|
-  s.add_dependency(gem, "= #{version}")
-end
+#### Header 2
+The fall() method in the RainDrop class simulates the falling of raindrops:
+It iterates through each droplet in the rainDropElements list and calls changeRandomly() on each, giving them a chance to change based on changeChance.
+A new raindrop is added to the top of the screen with push_front.
+If the number of raindrop elements exceeds the current size, the oldest element is removed with pop_back.
+The y position of the raindrop is incremented. If it reaches the screen's maximum depth (maxDepthY), it resets to the top with  y = 0, simulating the continuous fall of raindrops.
+```c++
+void matrix::RainDrop::fall() {
+	for (auto& droplet : rainDropElements)
+		droplet.changeRandomly(changeChance); //iterates through all existing raindrop elements, each has a changce to change (changeChance)
+	rainDropElements.push_front({ x, y, charSet, charSetSize });  // add rain drop at the top of screen
+
+	if (rainDropElements.size() > static_cast<size_t>(size)) {
+		rainDropElements.pop_back();  // removes characters that exceed size of screen.
+	}
+	 
+	if (++y >= maxDepthY) // makes rain fall
+		y = 0;  // reset
+}
 ```
-
-#### Header 4
-
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-
 ##### Header 5
 
 1.  This is an ordered list following a header.
