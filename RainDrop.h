@@ -5,7 +5,6 @@
 	16/02/2025
 */
 
-#pragma once
 #include <random>
 #include <list>
 
@@ -102,15 +101,15 @@ namespace matrix
 		size_t charSetSize;
 
 		inline void changeRandomly(const float chance){
-			static std::uniform_real_distribution<float> localDisF(0.0f, 1.0f);
-			if (chance >= localDisF(mt)) {
-				std::uniform_int_distribution<size_t> disI(0, charSetSize - 1);
-				c = charSet[disI(mt)];
+			static std::uniform_real_distribution<float> localDisF(0.0f, 1.0f); // rand num 
+			if (chance >= localDisF(mt)) {  // If the generated value is less than or equal to chance, change c
+				std::uniform_int_distribution<size_t> disI(0, charSetSize - 1); // random index within the range [0, charSetSize - 1]
+				c = charSet[disI(mt)]; //picks rand char from charSet
 			}
 		}
 
 		inline RainDropElement(const int x, const int y, const wchar_t* charSet, size_t charSetSize )
-			: x(x), y(y), c(L' '), charSet(charSet), charSetSize(charSetSize)
+			: x(x), y(y), c(L' '), charSet(charSet), charSetSize(charSetSize) // Member initializer list https://en.cppreference.com/w/cpp/language/constructor
 		{
 			changeRandomly(1);
 		}
