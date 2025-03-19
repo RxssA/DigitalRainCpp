@@ -20,7 +20,8 @@ A C++ console application that simulates the iconic "Matrix" falling code effect
 ## Detailed Code Explanation
 
 ### 1. Character Sets and Enums
-The program defines different sets of Unicode characters for various visual effects. Each set is carefully chosen to create distinct visual styles:
+The program defines different sets of Unicode characters for various visual effects.
+This set includes mathematical symbols, Greek letters, and special characters that create the classic Matrix "digital rain" look.
 
 ```cpp
 // Matrix-style characters (default)
@@ -34,32 +35,27 @@ const wchar_t unicodeCharacters[]{
     L'★',L'♠',L'♣',L'♪',L'♯',L'░',L'▓'
 };
 ```
-This set includes mathematical symbols, Greek letters, and special characters that create the classic Matrix "digital rain" look.
-
+These characters create a snowflake-like effect.
 ```cpp
 // Snow effect characters
 const wchar_t unicodeCharactersSnow[]{
     L'✼',L'❋',L'❊'
 };
 ```
-These characters create a snowflake-like effect.
-
+These characters create a simple rain effect using different shades of blocks.
 ```cpp
 // Rain effect characters
 const wchar_t unicodeCharactersRain[]{
     L'░',L'▓'
 };
 ```
-These characters create a simple rain effect using different shades of blocks.
-
+These characters create a diamond pattern effect.
 ```cpp
 // Diamond effect characters
 const wchar_t unicodeCharactersDiamonds[]{
     L'⬖',L'⬗',L'⬘',L'⬙',L'◈'
 };
 ```
-These characters create a diamond pattern effect.
-
 The `CharacterSet` enum allows selection between different character sets:
 ```cpp
 enum class CharacterSet {
@@ -222,6 +218,7 @@ The RainDrop class manages a vertical column of falling characters. It:
 
 ### 6. Double Buffered Console
 The `DoubleBufferedConsole` class handles efficient screen rendering:
+https://github.com/Kevger/DoubleBufferedWindowsConsole/blob/master/source/DoubleBufferedConsole.h
 
 ```cpp
 template<typename char_t = wchar_t>
