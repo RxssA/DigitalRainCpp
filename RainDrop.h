@@ -1,4 +1,7 @@
-﻿/*
+﻿#ifndef RAIN_DROP_H
+#define RAIN_DROP_H
+
+/*
 	Digital Rain
 	Ross Amritage
 	G00401655
@@ -155,3 +158,5 @@ namespace matrix
 				};
 
 }
+
+#endif // RAIN_DROP_H

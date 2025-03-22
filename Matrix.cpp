@@ -26,9 +26,8 @@ void initRainDrops(std::vector<matrix::RainDrop>& rainDrops, int width, int heig
     }
 }
 
-
 void clearScreen() {
-    std::cout << std::string(50, '\n');  // Simulate clearing screen
+    system("cls");  // Use system cls instead of newlines
 }
 
 int main()
@@ -36,6 +35,8 @@ int main()
     while (true)
     {
         clearScreen();
+        std::cout << "Digital Rain Animation\n";
+        std::cout << "=====================\n\n";
         std::cout << "Choose a character set:\n";
         std::cout << "1: Matrix\n";
         std::cout << "2: Snow\n";
@@ -68,7 +69,8 @@ int main()
         }
         clearScreen();
         
-
+        std::cout << "Digital Rain\n";
+        std::cout << "=====================\n\n";
         std::cout << "Choose a color for the rain:\n";
         std::cout << "1: Green\n";
         std::cout << "2: White\n";
@@ -104,6 +106,7 @@ int main()
         const wchar_t* selectedCharacters = matrix::getCharacterSet(selectedSet);
         size_t selectedCharacterSet = matrix::getCharacterSetSize(selectedSet);
 
+        // Create console after menu display
         DoubleBufferedConsole<wchar_t> myConsole(L"Matrix");
         short width, height;
         std::tie(width, height) = myConsole.getSize();
@@ -114,15 +117,17 @@ int main()
 
         std::uniform_real_distribution<double> disD(0, 1);
 
-        std::cout << "\nPress ENTER to return to the menu...\n";
-
-        while (true)
+        bool running = true;
+        while (running)
         {
             if (_kbhit())
             {
                 char key = _getch();
-                if (key == 13)  // Enter key
-                    break;  // Exit rain animation and return to menu
+                if (key == 'q' || key == 'Q') 
+                {
+                    running = false;  
+                    break;
+                }
             }
 
             for (auto& rainDrop : rainDrops)
@@ -150,7 +155,8 @@ int main()
             std::this_thread::sleep_for(refreshRate);
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(200));
-        myConsole.~DoubleBufferedConsole(); 
+        myConsole.cleanup();  // Clean up console resources
+        clearScreen();  // Clear the screen before showing menu again
     }
 
     return 0;

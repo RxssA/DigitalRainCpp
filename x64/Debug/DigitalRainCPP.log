@@ -1,12 +1,12 @@
 ﻿  Matrix.cpp
-C:\Users\rossa\Desktop\Cpp Projects\DigitalRainCPP\DoubleBufferedConsole.h(94,5): warning C4984: 'if constexpr' is a C++17 language extension
+C:\Users\rossa\Desktop\Cpp Projects\DigitalRainCPP\DoubleBufferedConsole.h(176,5): warning C4984: 'if constexpr' is a C++17 language extension
   (compiling source file 'Matrix.cpp')
-      C:\Users\rossa\Desktop\Cpp Projects\DigitalRainCPP\DoubleBufferedConsole.h(94,5):
+      C:\Users\rossa\Desktop\Cpp Projects\DigitalRainCPP\DoubleBufferedConsole.h(176,5):
       the template instantiation context (the oldest one first) is
-          C:\Users\rossa\Desktop\Cpp Projects\DigitalRainCPP\DoubleBufferedConsole.h(12,7):
+          C:\Users\rossa\Desktop\Cpp Projects\DigitalRainCPP\DoubleBufferedConsole.h(46,7):
           while compiling class template 'DoubleBufferedConsole'
   
-C:\Users\rossa\Desktop\Cpp Projects\DigitalRainCPP\DoubleBufferedConsole.h(106,3): warning C4984: 'if constexpr' is a C++17 language extension
+C:\Users\rossa\Desktop\Cpp Projects\DigitalRainCPP\DoubleBufferedConsole.h(189,3): warning C4984: 'if constexpr' is a C++17 language extension
   (compiling source file 'Matrix.cpp')
   
   DigitalRainCPP.vcxproj -> C:\Users\rossa\Desktop\Cpp Projects\DigitalRain\x64\Debug\DigitalRainCPP.exe
