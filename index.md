@@ -348,6 +348,16 @@ The DoubleBufferedConsole class implements double buffering for smooth screen up
 The main program handles user interaction and animation:
 
 ```cpp
+bool shouldExit()
+{
+    if (_kbhit())
+    {
+        return _getch() == 'q';
+    }
+    return false;
+}
+```
+```cpp
 using namespace std::chrono_literals;
 const auto refreshRate = 0.05s;
 const auto resizeChance = 0.9;
@@ -365,11 +375,13 @@ void initRainDrops(std::vector<matrix::RainDrop>& rainDrops, int width, int heig
         rainDrops.emplace_back(disSize(mt), x, disDepth(mt), 0.2f, charSet, charSetSize);
     }
 }
-
+```
+```cpp
 void clearScreen() {
     system("cls");  // Use system cls instead of newlines
 }
-
+```
+```cpp
 matrix::CharacterSet selectCharacterSet()
 {
     clearScreen();
@@ -391,7 +403,8 @@ matrix::CharacterSet selectCharacterSet()
         return selectCharacterSet();
     }
 }
-
+```
+```cpp
 WORD selectRainColor()
 {
     clearScreen();
@@ -412,17 +425,8 @@ WORD selectRainColor()
         return FOREGROUND_GREEN | FOREGROUND_INTENSITY;
     }
 }
-
-bool shouldExit()
-{
-    if (_kbhit())
-    {
-        return _getch() == 'q';
-    }
-    return false;
-}
-
-
+```
+```cpp
 void runRainAnimation(matrix::CharacterSet selectedSet, WORD txtAttributes)
 {
     const wchar_t* selectedCharacters = matrix::getCharacterSet(selectedSet);
@@ -470,7 +474,8 @@ void runRainAnimation(matrix::CharacterSet selectedSet, WORD txtAttributes)
     myConsole.cleanup();
     clearScreen();
 }
-
+```
+```cpp
 void startRainSimulation()
 {
     while (true)
@@ -480,7 +485,8 @@ void startRainSimulation()
         runRainAnimation(selectedSet, txtAttributes);
     }
 }
-
+```
+```cpp
 int main()
 {
     startRainSimulation();
