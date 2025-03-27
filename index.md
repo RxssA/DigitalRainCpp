@@ -347,6 +347,7 @@ The DoubleBufferedConsole class implements double buffering for smooth screen up
 ### 7. Main Program Flow
 The main program handles user interaction and animation:
 
+This shouldExit() function checks for a key press using _kbhit() from the conio.h library and returns true if the 'q' key is pressed, stopping the rain loop and returning to the menu.
 ```cpp
 bool shouldExit()
 {
@@ -357,11 +358,8 @@ bool shouldExit()
     return false;
 }
 ```
+The initRainDrops function initializes raindrops with random positions and depths using std::mt19937. It loops through the screen width, creating RainDrop objects with randomized y positions, depths, and characters. Speed is fixed at 0.2f, ensuring smooth animation.
 ```cpp
-using namespace std::chrono_literals;
-const auto refreshRate = 0.05s;
-const auto resizeChance = 0.9;
-
 static std::random_device rd;
 static std::mt19937 mt(rd());
 
@@ -376,11 +374,13 @@ void initRainDrops(std::vector<matrix::RainDrop>& rainDrops, int width, int heig
     }
 }
 ```
+Used to clear screen before starting rain loop
 ```cpp
 void clearScreen() {
     system("cls");  // Use system cls instead of newlines
 }
 ```
+Prints the menu, user selects the character set to be used for the rain loop.
 ```cpp
 matrix::CharacterSet selectCharacterSet()
 {
@@ -404,6 +404,7 @@ matrix::CharacterSet selectCharacterSet()
     }
 }
 ```
+Prints menu, user selects the colour of the characters.
 ```cpp
 WORD selectRainColor()
 {
@@ -426,6 +427,7 @@ WORD selectRainColor()
     }
 }
 ```
+The `runRainAnimation` function manages the Matrix-style rain animation. It initializes raindrops, updates their positions in a loop, and redraws them on a double-buffered console. It continuously checks for user input (`q` to exit), handles resizing, and refreshes at a set rate.
 ```cpp
 void runRainAnimation(matrix::CharacterSet selectedSet, WORD txtAttributes)
 {
@@ -475,6 +477,11 @@ void runRainAnimation(matrix::CharacterSet selectedSet, WORD txtAttributes)
     clearScreen();
 }
 ```
+The startRainSimulation function runs an infinite loop where it repeatedly:
+Selects a character set for the rain animation.
+Selects the rain color attributes.
+Calls runRainAnimation to start the animation with the chosen settings.
+It continuously restarts after each animation session.
 ```cpp
 void startRainSimulation()
 {
@@ -486,6 +493,7 @@ void startRainSimulation()
     }
 }
 ```
+Here the startRainSimulation function is called in the main loop, I wanted to keep main as clean as possible as it is good coding practice.
 ```cpp
 int main()
 {
