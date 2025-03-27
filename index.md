@@ -373,118 +373,144 @@ The DoubleBufferedConsole class implements double buffering for smooth screen up
 The main program handles user interaction and animation:
 
 ```cpp
-int main() {
-    while (true) {
-        // Display menu and get user choices
-        clearScreen();
-        std::cout << "Digital Rain Animation\n";
-        std::cout << "=====================\n\n";
-        std::cout << "Choose a character set:\n";
-        std::cout << "1: Matrix\n";
-        std::cout << "2: Snow\n";
-        std::cout << "3: Diamonds\n";
-        std::cout << "4: Rain\n";
-        std::cout << "Enter your choice: ";
+using namespace std::chrono_literals;
+const auto refreshRate = 0.05s;
+const auto resizeChance = 0.9;
 
-        // Get character set choice
-        int choice;
-        std::cin >> choice;
-        matrix::CharacterSet selectedSet;
-        switch (choice) {
-            case 1: selectedSet = matrix::CharacterSet::Standard; break;
-            case 2: selectedSet = matrix::CharacterSet::Snow; break;
-            case 3: selectedSet = matrix::CharacterSet::Diamonds; break;
-            case 4: selectedSet = matrix::CharacterSet::Rain; break;
-            default:
-                std::cout << "Invalid choice. Please try again.\n";
-                std::this_thread::sleep_for(1s);
-                continue;
+static std::random_device rd;
+static std::mt19937 mt(rd());
+
+void initRainDrops(std::vector<matrix::RainDrop>& rainDrops, int width, int height, const wchar_t* charSet, size_t charSetSize)
+{
+    std::uniform_int_distribution<int> disSize(0, height);
+    std::uniform_int_distribution<int> disDepth(height, height + height / 2);
+
+    for (int x = 0; x < width; ++x)
+    {
+        rainDrops.emplace_back(disSize(mt), x, disDepth(mt), 0.2f, charSet, charSetSize);
+    }
+}
+
+void clearScreen() {
+    system("cls");  // Use system cls instead of newlines
+}
+
+matrix::CharacterSet selectCharacterSet()
+{
+    clearScreen();
+    std::cout << "Digital Rain Animation"<< "\n""====================="<<"\n";
+    std::cout << "Choose a character set:\n1: Matrix\n2: Snow\n3: Diamonds\n4: Rain\nEnter your choice: ";
+
+    int choice;
+    std::cin >> choice;
+
+    switch (choice)
+    {
+    case 1: return matrix::CharacterSet::Standard;
+    case 2: return matrix::CharacterSet::Snow;
+    case 3: return matrix::CharacterSet::Diamonds;
+    case 4: return matrix::CharacterSet::Rain;
+    default:
+        std::cout << "Invalid choice. Please try again.\n";
+        std::this_thread::sleep_for(1s);
+        return selectCharacterSet();
+    }
+}
+
+WORD selectRainColor()
+{
+    clearScreen();
+    std::cout << "Digital Rain" << "\n""=====================" << "\n";
+    std::cout << "Choose a colour for the rain:\n1: Green\n2: White\n3: Blue\n4: Yellow\nEnter your choice: ";
+
+    int colourChoice;
+    std::cin >> colourChoice;
+
+    switch (colourChoice)
+    {
+    case 1: return FOREGROUND_GREEN | FOREGROUND_INTENSITY;
+    case 2: return FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+    case 3: return FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+    case 4: return FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY;
+    default:
+        std::cout << "Invalid choice. Defaulting to Green.\n";
+        return FOREGROUND_GREEN | FOREGROUND_INTENSITY;
+    }
+}
+
+bool shouldExit()
+{
+    if (_kbhit())
+    {
+        return _getch() == 'q';
+    }
+    return false;
+}
+
+
+void runRainAnimation(matrix::CharacterSet selectedSet, WORD txtAttributes)
+{
+    const wchar_t* selectedCharacters = matrix::getCharacterSet(selectedSet);
+    size_t selectedCharacterSet = matrix::getCharacterSetSize(selectedSet);
+
+    DoubleBufferedConsole<wchar_t> myConsole(L"Matrix");
+    short width, height;
+    std::tie(width, height) = myConsole.getSize();
+
+    myConsole.clear(' ', txtAttributes);
+
+    std::vector<matrix::RainDrop> rainDrops;
+    initRainDrops(rainDrops, width, height, selectedCharacters, selectedCharacterSet);
+
+    std::uniform_real_distribution<double> disD(0, 1);
+    bool running = true;
+
+    while (!shouldExit())  // while should exit is true, is set to false in the shouldExit func when q is pressed
+    {
+        for (auto& rainDrop : rainDrops)
+        {
+            rainDrop.fall();
+            for (const auto& element : rainDrop.get())
+            {
+                if (element.y < height)
+                {
+                    myConsole.write(element.x, element.y, element.c, txtAttributes);
+                }
+            }
+
+            double randValue = disD(mt);
+            if (randValue <= resizeChance)
+            {
+                (randValue <= 0.5) ? ++rainDrop : --rainDrop;  //new and improved
+            }
+
         }
 
-        // Get color choice
-        clearScreen();
-        std::cout << "Digital Rain Animation\n";
-        std::cout << "=====================\n\n";
-        std::cout << "Choose a color for the rain:\n";
-        std::cout << "1: Green\n";
-        std::cout << "2: White\n";
-        std::cout << "3: Blue\n";
-        std::cout << "4: Yellow\n";
-        std::cout << "Enter your choice: ";
-
-        int colorChoice;
-        std::cin >> colorChoice;
-
-        // Set color attributes
-        WORD txtAttributes = FOREGROUND_GREEN | FOREGROUND_INTENSITY;
-        switch (colorChoice) {
-            case 1: txtAttributes = FOREGROUND_GREEN | FOREGROUND_INTENSITY; break;
-            case 2: txtAttributes = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY; break;
-            case 3: txtAttributes = FOREGROUND_BLUE | FOREGROUND_INTENSITY; break;
-            case 4: txtAttributes = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY; break;
-            default:
-                std::cout << "Invalid choice. Defaulting to Green.\n";
-                txtAttributes = FOREGROUND_GREEN | FOREGROUND_INTENSITY;
-                break;
-        }
-
-        // Initialize console and raindrops
-        const wchar_t* selectedCharacters = matrix::getCharacterSet(selectedSet);
-        size_t selectedCharacterSet = matrix::getCharacterSetSize(selectedSet);
-
-        DoubleBufferedConsole<wchar_t> myConsole(L"Matrix");
-        short width, height;
-        std::tie(width, height) = myConsole.getSize();
+        myConsole.flip();
         myConsole.clear(' ', txtAttributes);
-
-        std::vector<matrix::RainDrop> rainDrops;
-        initRainDrops(rainDrops, width, height, selectedCharacters, selectedCharacterSet);
-
-        std::uniform_real_distribution<double> disD(0, 1);
-
-        // Animation loop
-        bool running = true;
-        while (running) {
-            // Check for quit command
-            if (_kbhit()) {
-                char key = _getch();
-                if (key == 'q' || key == 'Q') {
-                    running = false;
-                    break;
-                }
-            }
-
-            // Update and render raindrops
-            for (auto& rainDrop : rainDrops) {
-                rainDrop.fall();
-                for (const auto& element : rainDrop.get()) {
-                    if (element.y < height) {
-                        myConsole.write(element.x, element.y, element.c, txtAttributes);
-                    }
-                }
-
-                // Randomly adjust raindrop size
-                if (disD(mt) <= resizeChance) {
-                    if (disD(mt) <= 0.5)
-                        ++rainDrop;
-                    else
-                        --rainDrop;
-                }
-            }
-
-            // Update screen
-            myConsole.flip();
-            myConsole.clear(' ', txtAttributes);
-            std::this_thread::sleep_for(refreshRate);
-        }
-
-        // Cleanup and return to menu
-        std::this_thread::sleep_for(std::chrono::milliseconds(200));
-        myConsole.~DoubleBufferedConsole();
-        clearScreen();
+        std::this_thread::sleep_for(refreshRate);
     }
 
+    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    myConsole.cleanup();
+    clearScreen();
+}
+
+void startRainSimulation()
+{
+    while (true)
+    {
+        matrix::CharacterSet selectedSet = selectCharacterSet();
+        WORD txtAttributes = selectRainColor();
+        runRainAnimation(selectedSet, txtAttributes);
+    }
+}
+
+int main()
+{
+    startRainSimulation();
     return 0;
+}
 }
 ```
 
