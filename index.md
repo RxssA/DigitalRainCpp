@@ -229,8 +229,12 @@ The RainDrop class manages a vertical column of falling characters. It:
 - Provides methods to modify the column size
 
 ### 6. Double Buffered Console
-The `DoubleBufferedConsole` class handles efficient screen rendering:
-https://github.com/Kevger/DoubleBufferedWindowsConsole/blob/master/source/DoubleBufferedConsole.h
+The `DoubleBufferedConsole`[1] class handles efficient screen rendering:
+The DoubleBufferedConsole class implements double buffering for smooth screen updates:
+- Uses two screen buffers to prevent flickering
+- Handles character writing and screen clearing
+- Manages console window setup and cleanup
+- Supports both Unicode and ASCII characters
 
 ```cpp
 template<typename char_t = wchar_t>
@@ -337,13 +341,6 @@ public:
     }
 };
 ```
-
-The DoubleBufferedConsole class implements double buffering for smooth screen updates:
-- Uses two screen buffers to prevent flickering
-- Handles character writing and screen clearing
-- Manages console window setup and cleanup
-- Supports both Unicode and ASCII characters
-
 ### 7. Main Program Flow
 The main program handles user interaction and animation:
 
@@ -531,5 +528,8 @@ The main program flow:
 - C++ Standard Library
 - Modern C++ features (C++17 or later)
 
+## Known Issues
+- flickering of rain, I think this issue is caused by window size being set up incorrectly somehow. The issue fixes itself after maximizing and then minimizing the terminal window. I have tried setting the terminal window to be maxmized on startup, but everything I have tried doesn't seem to work.
+
 ## References
--
+- [1] Kevger. DoubleBufferedWindowsConsole (2020) https://github.com/Kevger/DoubleBufferedWindowsConsole/blob/master/source/DoubleBufferedConsole.h
