@@ -20,7 +20,12 @@ A C++ console application that simulates the iconic "Matrix" falling code effect
 ## Detailed Code Explanation
 
 ### 1. Character Sets and Enums
+<<<<<<< HEAD
 The program defines different sets of Unicode characters for various visual effects. Each set is carefully chosen to create distinct visual styles:
+=======
+The program defines different sets of Unicode characters for various visual effects.
+This set includes mathematical symbols, Greek letters, and special characters that create the classic Matrix "digital rain" look.
+>>>>>>> 3ffbfe731be67dc5ca88748b5091ca3747c16e15
 
 ```cpp
 // Matrix-style characters (default)
@@ -34,32 +39,47 @@ const wchar_t unicodeCharacters[]{
     L'★',L'♠',L'♣',L'♪',L'♯',L'░',L'▓'
 };
 ```
+<<<<<<< HEAD
 This set includes mathematical symbols, Greek letters, and special characters that create the classic Matrix "digital rain" look.
 
+=======
+These characters create a snowflake-like effect.
+>>>>>>> 3ffbfe731be67dc5ca88748b5091ca3747c16e15
 ```cpp
 // Snow effect characters
 const wchar_t unicodeCharactersSnow[]{
     L'✼',L'❋',L'❊'
 };
 ```
+<<<<<<< HEAD
 These characters create a snowflake-like effect.
 
+=======
+These characters create a simple rain effect using different shades of blocks.
+>>>>>>> 3ffbfe731be67dc5ca88748b5091ca3747c16e15
 ```cpp
 // Rain effect characters
 const wchar_t unicodeCharactersRain[]{
     L'░',L'▓'
 };
 ```
+<<<<<<< HEAD
 These characters create a simple rain effect using different shades of blocks.
 
+=======
+These characters create a diamond pattern effect.
+>>>>>>> 3ffbfe731be67dc5ca88748b5091ca3747c16e15
 ```cpp
 // Diamond effect characters
 const wchar_t unicodeCharactersDiamonds[]{
     L'⬖',L'⬗',L'⬘',L'⬙',L'◈'
 };
 ```
+<<<<<<< HEAD
 These characters create a diamond pattern effect.
 
+=======
+>>>>>>> 3ffbfe731be67dc5ca88748b5091ca3747c16e15
 The `CharacterSet` enum allows selection between different character sets:
 ```cpp
 enum class CharacterSet {
@@ -95,7 +115,17 @@ inline const wchar_t* getCharacterSet(CharacterSet set) {
     }
 }
 ```
+<<<<<<< HEAD
 
+=======
+### getCharacterSetSize
+This gives us the total size in bytes of the entire array. For example, if unicodeCharacters is an array of 50 wchar_t elements
+And each wchar_t is 2 bytes (on Windows) Then sizeof(unicodeCharacters) would be 100 bytes (50 × 2). sizeof(unicodeCharacters[0]):
+This gives us the size in bytes of a single elementIn this case, it's the size of one wchar_t, On Windows, this would be 2 bytes. When we divide the total array size by the size of one element. We get the number of elements in the array. This is a safer way to get the array size than manually counting elements because:
+It automatically updates if you add or remove elements
+It's less prone to errors than manual counting
+It works with any array type 
+>>>>>>> 3ffbfe731be67dc5ca88748b5091ca3747c16e15
 ```cpp
 // Calculates the size of the selected character set
 static size_t getCharacterSetSize(CharacterSet set) {
@@ -222,6 +252,10 @@ The RainDrop class manages a vertical column of falling characters. It:
 
 ### 6. Double Buffered Console
 The `DoubleBufferedConsole` class handles efficient screen rendering:
+<<<<<<< HEAD
+=======
+https://github.com/Kevger/DoubleBufferedWindowsConsole/blob/master/source/DoubleBufferedConsole.h
+>>>>>>> 3ffbfe731be67dc5ca88748b5091ca3747c16e15
 
 ```cpp
 template<typename char_t = wchar_t>
@@ -481,3 +515,10 @@ The main program flow:
 - Windows Console API
 - C++ Standard Library
 - Modern C++ features (C++17 or later)
+<<<<<<< HEAD
+=======
+
+## References
+-
+
+>>>>>>> 3ffbfe731be67dc5ca88748b5091ca3747c16e15
