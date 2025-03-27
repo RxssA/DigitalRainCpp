@@ -14,6 +14,44 @@
 
 namespace matrix
 {
+	class RainDrop {
+	public:
+		using raindrops_t = std::list<RainDropElement>;
+	private:
+		raindrops_t rainDropElements;  // falling charcters
+		const int maxSize; // size of column of rain
+		int size; // current size of colunm
+		const int x;
+		const int maxDepthY; // screen size
+		float changeChance{ 0.5 }; // 50% chance of change
+		int y{ 0 };
+		const wchar_t* charSet;
+		size_t charSetSize;
+
+	public:
+		RainDrop(int maxSize, int x, int maxDepthY, float changeChance, const wchar_t* charSet, size_t charSetSize)
+			: maxSize(maxSize), x(x), y(0), size(maxSize / 2), maxDepthY(maxDepthY), changeChance(changeChance),
+			charSet(charSet), charSetSize(charSetSize) {
+		}
+
+		void fall();
+
+
+		inline const raindrops_t& get() const
+		{
+			return rainDropElements;
+		}
+		inline void operator++()  //increases raindrop size
+		{
+			size = std::min(maxSize, size + 1);
+		}
+
+		inline void operator--()  // decreases raindrop saize
+		{
+			size = std::max(1, size - 1);
+		}
+
+	};
 
 	const wchar_t unicodeCharacters[]{
 			 L'Ƣ',L'Ʃ',L'Ʊ',L'Ƹ',L'ǂ',L'ƽ',L'ǌ',L'Ȣ',L'Ⱦ',L'Ƚ',L'ɑ',L'ɤ',L'ʑ',
@@ -118,44 +156,7 @@ namespace matrix
 		}
 	};
 
-				class RainDrop {
-				public:
-					using raindrops_t = std::list<RainDropElement>;
-				private:
-					raindrops_t rainDropElements;  // falling charcters
-					const int maxSize; // size of column of rain
-					int size; // current size of colunm
-					const int x;
-					const int maxDepthY; // screen size
-					float changeChance{ 0.5 }; // 50% chance of change
-					int y{ 0 };
-					const wchar_t* charSet;
-					size_t charSetSize;
-
-				public:
-					RainDrop(int maxSize, int x, int maxDepthY, float changeChance, const wchar_t* charSet, size_t charSetSize)
-						: maxSize(maxSize), x(x), y(0), size(maxSize / 2), maxDepthY(maxDepthY), changeChance(changeChance),
-						charSet(charSet), charSetSize(charSetSize) {
-					}
-
-					void fall();
-
-
-					inline const raindrops_t& get() const
-					{
-						return rainDropElements;
-					}
-					inline void operator++()  //increases raindrop size
-					{
-						size = std::min(maxSize, size + 1);
-					}
-
-					inline void operator--()  // decreases raindrop saize
-					{
-						size = std::max(1, size - 1);
-					}
-
-				};
+				
 
 }
 

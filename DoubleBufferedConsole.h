@@ -23,7 +23,7 @@
 		https://learn.microsoft.com/en-us/windows/console/setconsolecursorinfo
 	- SetConsoleTitle: Sets the title for the current console window
 		https://learn.microsoft.com/en-us/windows/console/setconsoletitle
-	- WriteConsoleOutput: Writes character and color attribute data to a specified rectangular block of character cells in a console screen buffer
+	- WriteConsoleOutput: Writes character and colour attribute data to a specified rectangular block of character cells in a console screen buffer
 		https://learn.microsoft.com/en-us/windows/console/writeconsoleoutput
 	- SetConsoleActiveScreenBuffer: Sets the specified screen buffer to be the currently displayed console screen buffer
 		https://learn.microsoft.com/en-us/windows/console/setconsoleactivescreenbuffer
@@ -35,7 +35,7 @@
 		https://learn.microsoft.com/en-us/windows/win32/winprog/windows-data-types#handle
 	- SMALL_RECT: A structure that defines a rectangle by its top-left and bottom-right coordinates
 		https://learn.microsoft.com/en-us/windows/console/small-rect-str
-	- CHAR_INFO: A structure that holds a character and its attributes (color, etc.)
+	- CHAR_INFO: A structure that holds a character and its attributes (colour, etc.)
 		https://learn.microsoft.com/en-us/windows/console/char-info-str
 	- PCHAR_INFO: A pointer to a CHAR_INFO structure
 	- COORD: A structure that defines a coordinate in the console (X,Y position)
@@ -58,7 +58,7 @@ class DoubleBufferedConsole
 	// Buffer to store character and attribute data before rendering
 	// PCHAR_INFO is a pointer to CHAR_INFO, which contains:
 	// - Char: The character to display (can be Unicode or ASCII)
-	// - Attributes: Color and style information for the character
+	// - Attributes: Colour and style information for the character
 	// https://learn.microsoft.com/en-us/windows/console/char-info-str
 	PCHAR_INFO charInfoBuffer{ nullptr };  
 	// Tracks cursor position and buffer dimensions
@@ -163,15 +163,15 @@ public:
 		SetConsoleActiveScreenBuffer(buffer[bufferIndex & 0x01]);
 	}
 
-	// Clears the background buffer with specified character and color
+	// Clears the background buffer with specified character and colour
 	void clear(const char_t filling, unsigned short attribute)
 	{
-		// Fill the entire buffer with the specified character and color
+		// Fill the entire buffer with the specified character and colour
 		for (auto y = 0; y < height; ++y)
 		{
 			for (auto x = 0; x < width; ++x)
 			{
-				charInfoBuffer[x + width * y].Attributes = attribute;  // Set color attributes
+				charInfoBuffer[x + width * y].Attributes = attribute;  // Set colour attributes
 				// Set character based on template type (Unicode or ASCII)
 				if constexpr (std::is_same<char_t, wchar_t>::value)
 					charInfoBuffer[x + width * y].Char.UnicodeChar = filling;
@@ -191,7 +191,7 @@ public:
 		else
 			charInfoBuffer[x + width * y].Char.AsciiChar = c;
 
-		charInfoBuffer[coord].Attributes = attribute;  // Set color attributes
+		charInfoBuffer[coord].Attributes = attribute;  // Set colour attributes
 	}
 
 	// Returns the current console dimensions
