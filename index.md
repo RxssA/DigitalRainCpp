@@ -6,8 +6,10 @@ layout: default
 A C++ console application that simulates the iconic "Matrix" falling code effect. Using multithreading, double buffering, and randomization, the program generates cascading streams of Unicode characters that dynamically change and flow down the screen, mimicking the visual style from the Matrix movies.
 
 ![Matrix Rain Effect](docs/assets/images/2025-03-1418-05-19-ezgif.com-video-to-gif-converter.gif)
+
 ![Menu Interface](docs/assets/images/Screenshot 2025-03-29 210840.png)
 ![Menu Interface1](docs/assets/images/Screenshot 2025-03-29 210814.png)
+
 ## Features
 - **Realistic Falling Code Effect** – Uses a list-based system to manage individual character streams
 - **Dynamic Character Changes** – Each raindrop element has a chance to mutate into a different symbol
@@ -235,6 +237,9 @@ The DoubleBufferedConsole class implements double buffering for smooth screen up
 - Handles character writing and screen clearing
 - Manages console window setup and cleanup
 - Supports both Unicode and ASCII characters
+
+# See Reference section for what resources I used to gain a better understanding of the DoubleBufferedConsole and windows api.
+
 
 ```cpp
 template<typename char_t = wchar_t>
@@ -528,8 +533,25 @@ The main program flow:
 - C++ Standard Library
 - Modern C++ features (C++17 or later)
 
-## Known Issues
-- flickering of rain, I think this issue is caused by window size being set up incorrectly somehow. The issue fixes itself after maximizing and then minimizing the terminal window. I have tried setting the terminal window to be maxmized on startup, but everything I have tried doesn't seem to work.
+## Issues
+- flickering of rain, at the time I thought this issue was caused by window size being set up incorrectly somehow. The issue fixed itself after maximizing and then minimizing the terminal window. I had tried setting the terminal window to be maxmized on startup, but everything I had tried doesn't seem to work, the fix was changing from C++11 to C++17, not sure how this fixed it yet.
 
 ## References
 - [1] Kevger. DoubleBufferedWindowsConsole (2020) https://github.com/Kevger/DoubleBufferedWindowsConsole/blob/master/source/DoubleBufferedConsole.h
+- [2]	https://learn.microsoft.com/en-us/windows/console/createconsolescreenbuffer
+- [3]   https://learn.microsoft.com/en-us/windows/console/setconsolescreenbuffersize
+- [4]	https://learn.microsoft.com/en-us/windows/console/setconsolewindowinfo
+- [5]	https://learn.microsoft.com/en-us/windows/console/getconsolecursorinfo
+- [6]	https://learn.microsoft.com/en-us/windows/console/setconsolecursorinfo
+- [7]	https://learn.microsoft.com/en-us/windows/console/setconsoletitle
+- [8]	https://learn.microsoft.com/en-us/windows/console/writeconsoleoutput
+- [9]	https://learn.microsoft.com/en-us/windows/console/setconsoleactivescreenbuffer
+- [10]	https://learn.microsoft.com/en-us/windows/console/getconsolescreenbufferinfo
+- [11]	https://learn.microsoft.com/en-us/windows/win32/winprog/windows-data-types#handle
+- [12]	https://learn.microsoft.com/en-us/windows/console/small-rect-str
+- [13]	https://learn.microsoft.com/en-us/windows/console/char-info-str
+- [15]	https://learn.microsoft.com/en-us/windows/console/coord-str
+- [16]  https://learn.microsoft.com/en-us/windows/win32/winprog/windows-data-types#handle
+- [17]  https://learn.microsoft.com/en-us/windows/console/small-rect-str
+- [18]  https://learn.microsoft.com/en-us/windows/console/char-info-str
+- [19]  https://learn.microsoft.com/en-us/windows/console/coord-str
