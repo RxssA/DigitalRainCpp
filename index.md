@@ -6,8 +6,8 @@ layout: default
 A C++ console application that simulates the iconic "Matrix" falling code effect. Using multithreading, double buffering, and randomization, the program generates cascading streams of Unicode characters that dynamically change and flow down the screen, mimicking the visual style from the Matrix movies.
 
 ![Matrix Rain Effect](docs/assets/images/2025-03-1418-05-19-ezgif.com-video-to-gif-converter.gif)
-![Menu Interface](docs/assets/images/Screenshot20250308132546.png)
-
+![Menu Interface](docs/assets/images/Screenshot 2025-03-29 210840.png)
+![Menu Interface1](docs/assets/images/Screenshot 2025-03-29 210814.png)
 ## Features
 - **Realistic Falling Code Effect** – Uses a list-based system to manage individual character streams
 - **Dynamic Character Changes** – Each raindrop element has a chance to mutate into a different symbol
