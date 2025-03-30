@@ -6,7 +6,9 @@ layout: default
 A C++ console application that simulates the iconic "Matrix" falling code effect. Using multithreading, double buffering, and randomization, the program generates cascading streams of Unicode characters that dynamically change and flow down the screen, mimicking the visual style from the Matrix movies.
 
 ![Matrix Rain Effect](docs/assets/images/2025-03-1418-05-19-ezgif.com-video-to-gif-converter.gif)
-![Menu Interface](docs/assets/images/Screenshot20250308132546.png)
+
+![Menu Interface](docs/assets/images/Screenshot 2025-03-29 210840.png)
+![Menu Interface1](docs/assets/images/Screenshot 2025-03-29 210814.png)
 
 ## Features
 - **Realistic Falling Code Effect** – Uses a list-based system to manage individual character streams
@@ -14,19 +16,14 @@ A C++ console application that simulates the iconic "Matrix" falling code effect
 - **Adjustable Rain Stream Size** – The length of each stream varies dynamically for a more organic look
 - **Custom Unicode Characters** – Uses a selection of unique symbols to enhance the digital rain aesthetic
 - **Multiple Character Sets** - Choose between Matrix, Snow, Diamonds, or Rain effects
-- **Color Customization** - Select from Green, White, Blue, or Yellow color schemes
+- **Color Customization** - Select from Green, White, Blue, or Yellow colour schemes
 - **Interactive Controls** - Press 'q' to exit the animation and return to menu
 
 ## Detailed Code Explanation
 
 ### 1. Character Sets and Enums
-<<<<<<< HEAD
 The program defines different sets of Unicode characters for various visual effects. Each set is carefully chosen to create distinct visual styles:
-=======
-The program defines different sets of Unicode characters for various visual effects.
-This set includes mathematical symbols, Greek letters, and special characters that create the classic Matrix "digital rain" look.
->>>>>>> 3ffbfe731be67dc5ca88748b5091ca3747c16e15
-
+This set includes mathematical symbols, Greek letters, and special characters that create the classic "Matrix" digital rain look.
 ```cpp
 // Matrix-style characters (default)
 const wchar_t unicodeCharacters[]{
@@ -39,47 +36,27 @@ const wchar_t unicodeCharacters[]{
     L'★',L'♠',L'♣',L'♪',L'♯',L'░',L'▓'
 };
 ```
-<<<<<<< HEAD
-This set includes mathematical symbols, Greek letters, and special characters that create the classic Matrix "digital rain" look.
-
-=======
 These characters create a snowflake-like effect.
->>>>>>> 3ffbfe731be67dc5ca88748b5091ca3747c16e15
 ```cpp
 // Snow effect characters
 const wchar_t unicodeCharactersSnow[]{
     L'✼',L'❋',L'❊'
 };
 ```
-<<<<<<< HEAD
-These characters create a snowflake-like effect.
-
-=======
 These characters create a simple rain effect using different shades of blocks.
->>>>>>> 3ffbfe731be67dc5ca88748b5091ca3747c16e15
 ```cpp
 // Rain effect characters
 const wchar_t unicodeCharactersRain[]{
     L'░',L'▓'
 };
 ```
-<<<<<<< HEAD
-These characters create a simple rain effect using different shades of blocks.
-
-=======
 These characters create a diamond pattern effect.
->>>>>>> 3ffbfe731be67dc5ca88748b5091ca3747c16e15
 ```cpp
 // Diamond effect characters
 const wchar_t unicodeCharactersDiamonds[]{
     L'⬖',L'⬗',L'⬘',L'⬙',L'◈'
 };
 ```
-<<<<<<< HEAD
-These characters create a diamond pattern effect.
-
-=======
->>>>>>> 3ffbfe731be67dc5ca88748b5091ca3747c16e15
 The `CharacterSet` enum allows selection between different character sets:
 ```cpp
 enum class CharacterSet {
@@ -92,7 +69,6 @@ enum class CharacterSet {
 
 ### 2. Character Set Management
 Helper functions to manage character sets:
-
 ```cpp
 // Returns the appropriate character set based on selection
 inline const wchar_t* getCharacterSet(CharacterSet set) {
@@ -115,17 +91,13 @@ inline const wchar_t* getCharacterSet(CharacterSet set) {
     }
 }
 ```
-<<<<<<< HEAD
-
-=======
 ### getCharacterSetSize
 This gives us the total size in bytes of the entire array. For example, if unicodeCharacters is an array of 50 wchar_t elements
-And each wchar_t is 2 bytes (on Windows) Then sizeof(unicodeCharacters) would be 100 bytes (50 × 2). sizeof(unicodeCharacters[0]):
-This gives us the size in bytes of a single elementIn this case, it's the size of one wchar_t, On Windows, this would be 2 bytes. When we divide the total array size by the size of one element. We get the number of elements in the array. This is a safer way to get the array size than manually counting elements because:
+and each wchar_t is 2 bytes (on Windows) then sizeof(unicodeCharacters) would be 100 bytes (50 × 2). sizeof(unicodeCharacters[0]):
+This gives us the size in bytes of a single element. In this case, it's the size of one wchar_t, On Windows, this would be 2 bytes. When we divide the total array size by the size of one element. We get the number of elements in the array. This is a safer way to get the array size than manually counting elements because:
 It automatically updates if you add or remove elements
 It's less prone to errors than manual counting
-It works with any array type 
->>>>>>> 3ffbfe731be67dc5ca88748b5091ca3747c16e15
+It works with any array type. [21] [22]
 ```cpp
 // Calculates the size of the selected character set
 static size_t getCharacterSetSize(CharacterSet set) {
@@ -149,7 +121,12 @@ static size_t getCharacterSetSize(CharacterSet set) {
 ```
 
 ### 3. Random Number Generation
-The program uses Mersenne Twister for high-quality random number generation:
+The program uses Mersenne Twister for "random" number generation, How Mersenne twister works:
+
+Internal State: Maintains a "memory" (state) of 624 numbers.
+Twisting: Periodically scrambles this state using bit shifts and math operations to mix values thoroughly.
+Tempering: Further tweaks each output number to hide patterns, ensuring results look random. [16]
+The Mersenne Twister is used because it provides better randomization than the standard `rand()` function. The `uniform_int_distribution` ensures an even distribution of random numbers, which is important for the natural look of the animation.
 
 ```cpp
 static std::random_device rd; // random device to seed MT
@@ -162,8 +139,6 @@ static std::mt19937 mt{ rd() };   //Mersenne Twister 19937 https://en.wikipedia.
 static std::uniform_int_distribution<size_t> disI(0, sizeof(unicodeCharacters) / sizeof(unicodeCharacters[0]));
 const static size_t maxDepth = 50;  // Maximum depth for rain effect
 ```
-
-The Mersenne Twister is used because it provides better randomization than the standard `rand()` function. The `uniform_int_distribution` ensures an even distribution of random numbers, which is important for the natural look of the animation.
 
 ### 4. RainDropElement Structure
 Represents a single character in the falling effect:
@@ -251,12 +226,14 @@ The RainDrop class manages a vertical column of falling characters. It:
 - Provides methods to modify the column size
 
 ### 6. Double Buffered Console
-The `DoubleBufferedConsole` class handles efficient screen rendering:
-<<<<<<< HEAD
-=======
-https://github.com/Kevger/DoubleBufferedWindowsConsole/blob/master/source/DoubleBufferedConsole.h
->>>>>>> 3ffbfe731be67dc5ca88748b5091ca3747c16e15
+The `DoubleBufferedConsole`[1] class handles efficient screen rendering:
+The DoubleBufferedConsole class implements double buffering for smooth screen updates:
+- Uses two screen buffers to prevent flickering
+- Handles character writing and screen clearing
+- Manages console window setup and cleanup
+- Supports both Unicode and ASCII characters
 
+# See References section for the resources used to gain a better understanding of the DoubleBufferedConsole and Windows api.
 ```cpp
 template<typename char_t = wchar_t>
 class DoubleBufferedConsole {
@@ -362,129 +339,162 @@ public:
     }
 };
 ```
-
-The DoubleBufferedConsole class implements double buffering for smooth screen updates:
-- Uses two screen buffers to prevent flickering
-- Handles character writing and screen clearing
-- Manages console window setup and cleanup
-- Supports both Unicode and ASCII characters
-
 ### 7. Main Program Flow
 The main program handles user interaction and animation:
 
+This shouldExit() function checks for a key press using _kbhit() from the conio.h library and returns true if the 'q' key is pressed, stopping the rain loop and returning to the menu.
 ```cpp
-int main() {
-    while (true) {
-        // Display menu and get user choices
-        clearScreen();
-        std::cout << "Digital Rain Animation\n";
-        std::cout << "=====================\n\n";
-        std::cout << "Choose a character set:\n";
-        std::cout << "1: Matrix\n";
-        std::cout << "2: Snow\n";
-        std::cout << "3: Diamonds\n";
-        std::cout << "4: Rain\n";
-        std::cout << "Enter your choice: ";
+bool shouldExit()
+{
+    if (_kbhit())
+    {
+        return _getch() == 'q';
+    }
+    return false;
+}
+```
+The initRainDrops function initializes raindrops with random positions and depths using std::mt19937 [21]. It loops through the screen width, creating RainDrop objects with randomized y positions, depths, and characters. Speed is fixed at 0.2f, ensuring smooth animation.
+```cpp
+static std::random_device rd;
+static std::mt19937 mt(rd());
 
-        // Get character set choice
-        int choice;
-        std::cin >> choice;
-        matrix::CharacterSet selectedSet;
-        switch (choice) {
-            case 1: selectedSet = matrix::CharacterSet::Standard; break;
-            case 2: selectedSet = matrix::CharacterSet::Snow; break;
-            case 3: selectedSet = matrix::CharacterSet::Diamonds; break;
-            case 4: selectedSet = matrix::CharacterSet::Rain; break;
-            default:
-                std::cout << "Invalid choice. Please try again.\n";
-                std::this_thread::sleep_for(1s);
-                continue;
+void initRainDrops(std::vector<matrix::RainDrop>& rainDrops, int width, int height, const wchar_t* charSet, size_t charSetSize)
+{
+    std::uniform_int_distribution<int> disSize(0, height);
+    std::uniform_int_distribution<int> disDepth(height, height + height / 2);
+
+    for (int x = 0; x < width; ++x)
+    {
+        rainDrops.emplace_back(disSize(mt), x, disDepth(mt), 0.2f, charSet, charSetSize);
+    }
+}
+```
+Used to clear screen before starting rain loop
+```cpp
+void clearScreen() {
+    system("cls");  // Use system cls instead of newlines
+}
+```
+Prints the menu, user selects the character set to be used for the rain loop.
+```cpp
+matrix::CharacterSet selectCharacterSet()
+{
+    clearScreen();
+    std::cout << "Digital Rain Animation"<< "\n""====================="<<"\n";
+    std::cout << "Choose a character set:\n1: Matrix\n2: Snow\n3: Diamonds\n4: Rain\nEnter your choice: ";
+
+    int choice;
+    std::cin >> choice;
+
+    switch (choice)
+    {
+    case 1: return matrix::CharacterSet::Standard;
+    case 2: return matrix::CharacterSet::Snow;
+    case 3: return matrix::CharacterSet::Diamonds;
+    case 4: return matrix::CharacterSet::Rain;
+    default:
+        std::cout << "Invalid choice. Please try again.\n";
+        std::this_thread::sleep_for(1s);
+        return selectCharacterSet();
+    }
+}
+```
+Prints menu, user selects the colour of the characters.
+```cpp
+WORD selectRainColor()
+{
+    clearScreen();
+    std::cout << "Digital Rain" << "\n""=====================" << "\n";
+    std::cout << "Choose a colour for the rain:\n1: Green\n2: White\n3: Blue\n4: Yellow\nEnter your choice: ";
+
+    int colourChoice;
+    std::cin >> colourChoice;
+
+    switch (colourChoice)
+    {
+    case 1: return FOREGROUND_GREEN | FOREGROUND_INTENSITY;
+    case 2: return FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+    case 3: return FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+    case 4: return FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY;
+    default:
+        std::cout << "Invalid choice. Defaulting to Green.\n";
+        return FOREGROUND_GREEN | FOREGROUND_INTENSITY;
+    }
+}
+```
+The `runRainAnimation` function manages the Matrix-style rain animation. It initializes raindrops, updates their positions in a loop, and redraws them on a double-buffered console. It continuously checks for user input (`q` to exit)[23], handles resizing, and refreshes at a set rate.
+```cpp
+void runRainAnimation(matrix::CharacterSet selectedSet, WORD txtAttributes)
+{
+    const wchar_t* selectedCharacters = matrix::getCharacterSet(selectedSet);
+    size_t selectedCharacterSet = matrix::getCharacterSetSize(selectedSet);
+
+    DoubleBufferedConsole<wchar_t> myConsole(L"Matrix");
+    short width, height;
+    std::tie(width, height) = myConsole.getSize();
+
+    myConsole.clear(' ', txtAttributes);
+
+    std::vector<matrix::RainDrop> rainDrops;
+    initRainDrops(rainDrops, width, height, selectedCharacters, selectedCharacterSet);
+
+    std::uniform_real_distribution<double> disD(0, 1);
+    bool running = true;
+
+    while (!shouldExit())  // while should exit is true, is set to false in the shouldExit func when q is pressed
+    {
+        for (auto& rainDrop : rainDrops)
+        {
+            rainDrop.fall();
+            for (const auto& element : rainDrop.get())
+            {
+                if (element.y < height)
+                {
+                    myConsole.write(element.x, element.y, element.c, txtAttributes);
+                }
+            }
+
+            double randValue = disD(mt);
+            if (randValue <= resizeChance)
+            {
+                (randValue <= 0.5) ? ++rainDrop : --rainDrop;  //new and improved
+            }
+
         }
 
-        // Get color choice
-        clearScreen();
-        std::cout << "Digital Rain Animation\n";
-        std::cout << "=====================\n\n";
-        std::cout << "Choose a color for the rain:\n";
-        std::cout << "1: Green\n";
-        std::cout << "2: White\n";
-        std::cout << "3: Blue\n";
-        std::cout << "4: Yellow\n";
-        std::cout << "Enter your choice: ";
-
-        int colorChoice;
-        std::cin >> colorChoice;
-
-        // Set color attributes
-        WORD txtAttributes = FOREGROUND_GREEN | FOREGROUND_INTENSITY;
-        switch (colorChoice) {
-            case 1: txtAttributes = FOREGROUND_GREEN | FOREGROUND_INTENSITY; break;
-            case 2: txtAttributes = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY; break;
-            case 3: txtAttributes = FOREGROUND_BLUE | FOREGROUND_INTENSITY; break;
-            case 4: txtAttributes = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY; break;
-            default:
-                std::cout << "Invalid choice. Defaulting to Green.\n";
-                txtAttributes = FOREGROUND_GREEN | FOREGROUND_INTENSITY;
-                break;
-        }
-
-        // Initialize console and raindrops
-        const wchar_t* selectedCharacters = matrix::getCharacterSet(selectedSet);
-        size_t selectedCharacterSet = matrix::getCharacterSetSize(selectedSet);
-
-        DoubleBufferedConsole<wchar_t> myConsole(L"Matrix");
-        short width, height;
-        std::tie(width, height) = myConsole.getSize();
+        myConsole.flip();
         myConsole.clear(' ', txtAttributes);
-
-        std::vector<matrix::RainDrop> rainDrops;
-        initRainDrops(rainDrops, width, height, selectedCharacters, selectedCharacterSet);
-
-        std::uniform_real_distribution<double> disD(0, 1);
-
-        // Animation loop
-        bool running = true;
-        while (running) {
-            // Check for quit command
-            if (_kbhit()) {
-                char key = _getch();
-                if (key == 'q' || key == 'Q') {
-                    running = false;
-                    break;
-                }
-            }
-
-            // Update and render raindrops
-            for (auto& rainDrop : rainDrops) {
-                rainDrop.fall();
-                for (const auto& element : rainDrop.get()) {
-                    if (element.y < height) {
-                        myConsole.write(element.x, element.y, element.c, txtAttributes);
-                    }
-                }
-
-                // Randomly adjust raindrop size
-                if (disD(mt) <= resizeChance) {
-                    if (disD(mt) <= 0.5)
-                        ++rainDrop;
-                    else
-                        --rainDrop;
-                }
-            }
-
-            // Update screen
-            myConsole.flip();
-            myConsole.clear(' ', txtAttributes);
-            std::this_thread::sleep_for(refreshRate);
-        }
-
-        // Cleanup and return to menu
-        std::this_thread::sleep_for(std::chrono::milliseconds(200));
-        myConsole.~DoubleBufferedConsole();
-        clearScreen();
+        std::this_thread::sleep_for(refreshRate);
     }
 
+    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    myConsole.cleanup();
+    clearScreen();
+}
+```
+The startRainSimulation function runs an infinite loop where it repeatedly:
+Selects a character set for the rain animation.
+Selects the rain colour attributes.
+Calls runRainAnimation to start the animation with the chosen settings.
+It continuously restarts after each animation session.
+```cpp
+void startRainSimulation()
+{
+    while (true)
+    {
+        matrix::CharacterSet selectedSet = selectCharacterSet();
+        WORD txtAttributes = selectRainColor();
+        runRainAnimation(selectedSet, txtAttributes);
+    }
+}
+```
+Here the startRainSimulation function is called in the main loop. To keep main as clean as possible, only one function is called here.
+```cpp
+int main()
+{
+    startRainSimulation();
     return 0;
+}
 }
 ```
 
@@ -499,7 +509,7 @@ The main program flow:
 ## Technical Details
 - Uses Windows Console API for efficient screen rendering
 - Implements double buffering to prevent screen flicker
-- Uses Unicode characters for rich visual effects
+- Uses Unicode characters for visual effects
 - Employs modern C++ features for efficient memory management
 - Provides smooth animation through controlled frame timing
 - Uses Mersenne Twister for high-quality random number generation
@@ -512,13 +522,59 @@ The main program flow:
 4. Press 'q' to exit the animation and return to menu
 
 ## Dependencies
-- Windows Console API
+- Windows Console API [22]
 - C++ Standard Library
 - Modern C++ features (C++17 or later)
-<<<<<<< HEAD
-=======
+
+## Issues
+- flickering of rain, at the time I thought this issue was caused by window size being set up incorrectly somehow. The issue fixed itself after maximizing and then minimizing the terminal window. I had tried setting the terminal window to be maxmized on startup, but everything I had tried doesn't seem to work, the fix was changing from C++11 to C++17, not sure how this fixed it yet.
+
+## Future Improvements
+- Remove nested loops from runRainAnimation()
 
 ## References
--
+[1] Kevger (2020) DoubleBufferedWindowsConsole. GitHub. Available at: https://github.com/Kevger/DoubleBufferedWindowsConsole/blob/master/source/DoubleBufferedConsole.h
 
->>>>>>> 3ffbfe731be67dc5ca88748b5091ca3747c16e15
+[2] Microsoft (n.d.) CreateConsoleScreenBuffer function. Available at: https://learn.microsoft.com/en-us/windows/console/createconsolescreenbuffer
+
+[3] Microsoft (n.d.) SetConsoleScreenBufferSize function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsolescreenbuffersize
+
+[4] Microsoft (n.d.) SetConsoleWindowInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsolewindowinfo
+
+[5] Microsoft (n.d.) GetConsoleCursorInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/getconsolecursorinfo
+
+[6] Microsoft (n.d.) SetConsoleCursorInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsolecursorinfo
+
+[7] Microsoft (n.d.) SetConsoleTitle function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsoletitle
+
+[8] Microsoft (n.d.) WriteConsoleOutput function. Available at: https://learn.microsoft.com/en-us/windows/console/writeconsoleoutput
+
+[9] Microsoft (n.d.) SetConsoleActiveScreenBuffer function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsoleactivescreenbuffer
+
+[10] Microsoft (n.d.) GetConsoleScreenBufferInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/getconsolescreenbufferinfo
+
+[11] Microsoft (n.d.) HANDLE type. Available at: https://learn.microsoft.com/en-us/windows/win32/winprog/windows-data-types#handle
+
+[12] Microsoft (n.d.) SMALL_RECT structure. Available at: https://learn.microsoft.com/en-us/windows/console/small-rect-str
+
+[13] Microsoft (n.d.) CHAR_INFO structure. Available at: https://learn.microsoft.com/en-us/windows/console/char-info-str
+
+[14] Microsoft (n.d.) COORD structure. Available at: https://learn.microsoft.com/en-us/windows/console/coord-str
+
+[15] cppreference (n.d.) Constructors and member initializer lists. Available at: https://en.cppreference.com/w/cpp/language/constructor
+
+[16] Wikipedia (n.d.) Mersenne Twister. Available at: https://en.wikipedia.org/wiki/Mersenne_Twister
+
+[17] cppreference (n.d.) std::uniform_real_distribution. Available at: https://en.cppreference.com/w/cpp/numeric/random/uniform_real_distribution
+
+[18] cppreference (n.d.) std::tuple. Available at: https://en.cppreference.com/w/cpp/utility/tuple
+
+[19] Microsoft (n.d.) Console screen buffers. Available at: https://learn.microsoft.com/en-us/windows/console/console-screen-buffers
+
+[20] GeeksforGeeks (n.d.) vector::emplace_back in C++ STL. Available at: https://www.geeksforgeeks.org/vectoremplace_back-c-stl/
+
+[21] DeepSeek AI (n.d.) DeepSeek-R1-Lite-Preview. Available at: https://platform.deepseek.com/
+
+[22] https://learn.microsoft.com/en-us/windows/win32/api/
+
+[23] https://en.wikipedia.org/wiki/Conio.h
