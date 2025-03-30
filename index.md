@@ -16,17 +16,14 @@ A C++ console application that simulates the iconic "Matrix" falling code effect
 - **Adjustable Rain Stream Size** – The length of each stream varies dynamically for a more organic look
 - **Custom Unicode Characters** – Uses a selection of unique symbols to enhance the digital rain aesthetic
 - **Multiple Character Sets** - Choose between Matrix, Snow, Diamonds, or Rain effects
-- **Color Customization** - Select from Green, White, Blue, or Yellow color schemes
+- **Color Customization** - Select from Green, White, Blue, or Yellow colour schemes
 - **Interactive Controls** - Press 'q' to exit the animation and return to menu
 
 ## Detailed Code Explanation
 
 ### 1. Character Sets and Enums
 The program defines different sets of Unicode characters for various visual effects. Each set is carefully chosen to create distinct visual styles:
-The program defines different sets of Unicode characters for various visual effects.
 This set includes mathematical symbols, Greek letters, and special characters that create the classic Matrix "digital rain" look.
-
-
 ```cpp
 // Matrix-style characters (default)
 const wchar_t unicodeCharacters[]{
@@ -39,7 +36,6 @@ const wchar_t unicodeCharacters[]{
     L'★',L'♠',L'♣',L'♪',L'♯',L'░',L'▓'
 };
 ```
-This set includes mathematical symbols, Greek letters, and special characters that create the classic Matrix "digital rain" look.
 These characters create a snowflake-like effect.
 ```cpp
 // Snow effect characters
@@ -47,7 +43,6 @@ const wchar_t unicodeCharactersSnow[]{
     L'✼',L'❋',L'❊'
 };
 ```
-These characters create a snowflake-like effect.
 These characters create a simple rain effect using different shades of blocks.
 ```cpp
 // Rain effect characters
@@ -55,7 +50,6 @@ const wchar_t unicodeCharactersRain[]{
     L'░',L'▓'
 };
 ```
-These characters create a simple rain effect using different shades of blocks.
 These characters create a diamond pattern effect.
 ```cpp
 // Diamond effect characters
@@ -63,7 +57,6 @@ const wchar_t unicodeCharactersDiamonds[]{
     L'⬖',L'⬗',L'⬘',L'⬙',L'◈'
 };
 ```
-These characters create a diamond pattern effect.
 The `CharacterSet` enum allows selection between different character sets:
 ```cpp
 enum class CharacterSet {
@@ -76,7 +69,6 @@ enum class CharacterSet {
 
 ### 2. Character Set Management
 Helper functions to manage character sets:
-
 ```cpp
 // Returns the appropriate character set based on selection
 inline const wchar_t* getCharacterSet(CharacterSet set) {
@@ -105,7 +97,7 @@ And each wchar_t is 2 bytes (on Windows) Then sizeof(unicodeCharacters) would be
 This gives us the size in bytes of a single elementIn this case, it's the size of one wchar_t, On Windows, this would be 2 bytes. When we divide the total array size by the size of one element. We get the number of elements in the array. This is a safer way to get the array size than manually counting elements because:
 It automatically updates if you add or remove elements
 It's less prone to errors than manual counting
-It works with any array type 
+It works with any array type. [21] [22]
 ```cpp
 // Calculates the size of the selected character set
 static size_t getCharacterSetSize(CharacterSet set) {
@@ -129,7 +121,12 @@ static size_t getCharacterSetSize(CharacterSet set) {
 ```
 
 ### 3. Random Number Generation
-The program uses Mersenne Twister for high-quality random number generation:
+The program uses Mersenne Twister for "random" number generation, How Mersenne twister works:
+
+Internal State: Maintains a "memory" (state) of 624 numbers.
+Twisting: Periodically scrambles this state using bit shifts and math operations to mix values thoroughly.
+Tempering: Further tweaks each output number to hide patterns, ensuring results look random. [16]
+The Mersenne Twister is used because it provides better randomization than the standard `rand()` function. The `uniform_int_distribution` ensures an even distribution of random numbers, which is important for the natural look of the animation.
 
 ```cpp
 static std::random_device rd; // random device to seed MT
@@ -142,8 +139,6 @@ static std::mt19937 mt{ rd() };   //Mersenne Twister 19937 https://en.wikipedia.
 static std::uniform_int_distribution<size_t> disI(0, sizeof(unicodeCharacters) / sizeof(unicodeCharacters[0]));
 const static size_t maxDepth = 50;  // Maximum depth for rain effect
 ```
-
-The Mersenne Twister is used because it provides better randomization than the standard `rand()` function. The `uniform_int_distribution` ensures an even distribution of random numbers, which is important for the natural look of the animation.
 
 ### 4. RainDropElement Structure
 Represents a single character in the falling effect:
@@ -238,9 +233,7 @@ The DoubleBufferedConsole class implements double buffering for smooth screen up
 - Manages console window setup and cleanup
 - Supports both Unicode and ASCII characters
 
-# See Reference section for what resources I used to gain a better understanding of the DoubleBufferedConsole and windows api.
-
-
+# See References section for the resources used to gain a better understanding of the DoubleBufferedConsole and Windows api.
 ```cpp
 template<typename char_t = wchar_t>
 class DoubleBufferedConsole {
@@ -360,7 +353,7 @@ bool shouldExit()
     return false;
 }
 ```
-The initRainDrops function initializes raindrops with random positions and depths using std::mt19937. It loops through the screen width, creating RainDrop objects with randomized y positions, depths, and characters. Speed is fixed at 0.2f, ensuring smooth animation.
+The initRainDrops function initializes raindrops with random positions and depths using std::mt19937 [21]. It loops through the screen width, creating RainDrop objects with randomized y positions, depths, and characters. Speed is fixed at 0.2f, ensuring smooth animation.
 ```cpp
 static std::random_device rd;
 static std::mt19937 mt(rd());
@@ -429,7 +422,7 @@ WORD selectRainColor()
     }
 }
 ```
-The `runRainAnimation` function manages the Matrix-style rain animation. It initializes raindrops, updates their positions in a loop, and redraws them on a double-buffered console. It continuously checks for user input (`q` to exit), handles resizing, and refreshes at a set rate.
+The `runRainAnimation` function manages the Matrix-style rain animation. It initializes raindrops, updates their positions in a loop, and redraws them on a double-buffered console. It continuously checks for user input (`q` to exit)[23], handles resizing, and refreshes at a set rate.
 ```cpp
 void runRainAnimation(matrix::CharacterSet selectedSet, WORD txtAttributes)
 {
@@ -481,7 +474,7 @@ void runRainAnimation(matrix::CharacterSet selectedSet, WORD txtAttributes)
 ```
 The startRainSimulation function runs an infinite loop where it repeatedly:
 Selects a character set for the rain animation.
-Selects the rain color attributes.
+Selects the rain colour attributes.
 Calls runRainAnimation to start the animation with the chosen settings.
 It continuously restarts after each animation session.
 ```cpp
@@ -495,7 +488,7 @@ void startRainSimulation()
     }
 }
 ```
-Here the startRainSimulation function is called in the main loop, I wanted to keep main as clean as possible as it is good coding practice.
+Here the startRainSimulation function is called in the main loop. To keep main as clean as possible, only one function is called here.
 ```cpp
 int main()
 {
@@ -516,7 +509,7 @@ The main program flow:
 ## Technical Details
 - Uses Windows Console API for efficient screen rendering
 - Implements double buffering to prevent screen flicker
-- Uses Unicode characters for rich visual effects
+- Uses Unicode characters for visual effects
 - Employs modern C++ features for efficient memory management
 - Provides smooth animation through controlled frame timing
 - Uses Mersenne Twister for high-quality random number generation
@@ -529,7 +522,7 @@ The main program flow:
 4. Press 'q' to exit the animation and return to menu
 
 ## Dependencies
-- Windows Console API
+- Windows Console API [22]
 - C++ Standard Library
 - Modern C++ features (C++17 or later)
 
@@ -540,28 +533,48 @@ The main program flow:
 - Remove nested loops from runRainAnimation()
 
 ## References
-- [1] Kevger. DoubleBufferedWindowsConsole (2020) https://github.com/Kevger/DoubleBufferedWindowsConsole/blob/master/source/DoubleBufferedConsole.h
-- [2]	https://learn.microsoft.com/en-us/windows/console/createconsolescreenbuffer
-- [3]   https://learn.microsoft.com/en-us/windows/console/setconsolescreenbuffersize
-- [4]	https://learn.microsoft.com/en-us/windows/console/setconsolewindowinfo
-- [5]	https://learn.microsoft.com/en-us/windows/console/getconsolecursorinfo
-- [6]	https://learn.microsoft.com/en-us/windows/console/setconsolecursorinfo
-- [7]	https://learn.microsoft.com/en-us/windows/console/setconsoletitle
-- [8]	https://learn.microsoft.com/en-us/windows/console/writeconsoleoutput
-- [9]	https://learn.microsoft.com/en-us/windows/console/setconsoleactivescreenbuffer
-- [10]	https://learn.microsoft.com/en-us/windows/console/getconsolescreenbufferinfo
-- [11]	https://learn.microsoft.com/en-us/windows/win32/winprog/windows-data-types#handle
-- [12]	https://learn.microsoft.com/en-us/windows/console/small-rect-str
-- [13]	https://learn.microsoft.com/en-us/windows/console/char-info-str
-- [15]	https://learn.microsoft.com/en-us/windows/console/coord-str
-- [16]  https://learn.microsoft.com/en-us/windows/win32/winprog/windows-data-types#handle
-- [17]  https://learn.microsoft.com/en-us/windows/console/small-rect-str
-- [18]  https://learn.microsoft.com/en-us/windows/console/char-info-str
-- [19]  https://learn.microsoft.com/en-us/windows/console/coord-str
-- [20]  https://en.cppreference.com/w/cpp/language/constructor
-- [21]  https://en.wikipedia.org/wiki/Mersenne_Twister
-- [22]  https://en.cppreference.com/w/cpp/numeric/random/uniform_real_distribution
-- [23] https://en.cppreference.com/w/cpp/utility/tuple/tie
-- [24] https://learn.microsoft.com/en-us/windows/console/console-screen-buffers
-- [25]  https://www.geeksforgeeks.org/vectoremplace_back-c-stl/
-- [26] https://en.cppreference.com/w/cpp/utility/tuple
+[1] Kevger (2020) DoubleBufferedWindowsConsole. GitHub. Available at: https://github.com/Kevger/DoubleBufferedWindowsConsole/blob/master/source/DoubleBufferedConsole.h
+
+[2] Microsoft (n.d.) CreateConsoleScreenBuffer function. Available at: https://learn.microsoft.com/en-us/windows/console/createconsolescreenbuffer
+
+[3] Microsoft (n.d.) SetConsoleScreenBufferSize function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsolescreenbuffersize
+
+[4] Microsoft (n.d.) SetConsoleWindowInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsolewindowinfo
+
+[5] Microsoft (n.d.) GetConsoleCursorInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/getconsolecursorinfo
+
+[6] Microsoft (n.d.) SetConsoleCursorInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsolecursorinfo
+
+[7] Microsoft (n.d.) SetConsoleTitle function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsoletitle
+
+[8] Microsoft (n.d.) WriteConsoleOutput function. Available at: https://learn.microsoft.com/en-us/windows/console/writeconsoleoutput
+
+[9] Microsoft (n.d.) SetConsoleActiveScreenBuffer function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsoleactivescreenbuffer
+
+[10] Microsoft (n.d.) GetConsoleScreenBufferInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/getconsolescreenbufferinfo
+
+[11] Microsoft (n.d.) HANDLE type. Available at: https://learn.microsoft.com/en-us/windows/win32/winprog/windows-data-types#handle
+
+[12] Microsoft (n.d.) SMALL_RECT structure. Available at: https://learn.microsoft.com/en-us/windows/console/small-rect-str
+
+[13] Microsoft (n.d.) CHAR_INFO structure. Available at: https://learn.microsoft.com/en-us/windows/console/char-info-str
+
+[14] Microsoft (n.d.) COORD structure. Available at: https://learn.microsoft.com/en-us/windows/console/coord-str
+
+[15] cppreference (n.d.) Constructors and member initializer lists. Available at: https://en.cppreference.com/w/cpp/language/constructor
+
+[16] Wikipedia (n.d.) Mersenne Twister. Available at: https://en.wikipedia.org/wiki/Mersenne_Twister
+
+[17] cppreference (n.d.) std::uniform_real_distribution. Available at: https://en.cppreference.com/w/cpp/numeric/random/uniform_real_distribution
+
+[18] cppreference (n.d.) std::tuple. Available at: https://en.cppreference.com/w/cpp/utility/tuple
+
+[19] Microsoft (n.d.) Console screen buffers. Available at: https://learn.microsoft.com/en-us/windows/console/console-screen-buffers
+
+[20] GeeksforGeeks (n.d.) vector::emplace_back in C++ STL. Available at: https://www.geeksforgeeks.org/vectoremplace_back-c-stl/
+
+[21] DeepSeek AI (n.d.) DeepSeek-R1-Lite-Preview. Available at: https://platform.deepseek.com/
+
+[22] https://learn.microsoft.com/en-us/windows/win32/api/
+
+[23] https://en.wikipedia.org/wiki/Conio.h
