@@ -8,6 +8,7 @@
 #include "DoubleBufferedConsole.h"
 #include <conio.h>
 #include <windows.h>
+#include "MatrixTest.h"
 
 using namespace std::chrono_literals;
 const auto refreshRate = 0.05s;
@@ -53,7 +54,7 @@ matrix::CharacterSet selectCharacterSet()
     }
 }
 
-WORD selectRainColor()
+WORD selectRainColour()
 {
     clearScreen();
     std::cout << "Digital Rain" << "\n""=====================" << "\n";
@@ -74,7 +75,7 @@ WORD selectRainColor()
     }
 }
 
-bool shouldExit()
+bool exitLoop()
 {
     if (_kbhit())
     {
@@ -101,7 +102,7 @@ void runRainAnimation(matrix::CharacterSet selectedSet, WORD txtAttributes)
     std::uniform_real_distribution<double> disD(0, 1);
     bool running = true;
 
-    while (!shouldExit())  // while should exit is true, is set to false in the shouldExit func when q is pressed
+    while (!exitLoop())  // while should exit is true, is set to false in the shouldExit func when q is pressed
     {
         for (auto& rainDrop : rainDrops)
         {
@@ -137,13 +138,14 @@ void startRainSimulation()
     while (true)
     {
         matrix::CharacterSet selectedSet = selectCharacterSet();
-        WORD txtAttributes = selectRainColor();
+        WORD txtAttributes = selectRainColour();
         runRainAnimation(selectedSet, txtAttributes);
     }
 }
 
 int main()
 {
-    startRainSimulation();
+    runAllTests();
+    //startRainSimulation();
     return 0;
 }

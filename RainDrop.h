@@ -14,6 +14,62 @@
 
 namespace matrix
 {
+
+	const wchar_t unicodeCharacters[]{
+			 L'Ƣ',L'Ʃ',L'Ʊ',L'Ƹ',L'ǂ',L'ƽ',L'ǌ',L'Ȣ',L'Ⱦ',L'Ƚ',L'ɑ',L'ɤ',L'ʑ',
+		L'ʫ',L'ʥ',L'ʮ',L'λ',L'ε',L'Ϡ',L'Ϟ',L'Ϡ',L'ϰ',L'Є',
+		L'ʃ',L'ʘ',L'ʭ',L'ʗ',L'ʡ',L'ʖ',L'ɕ',L'ɺ',L'ɧ',L'ʄ',
+		L'β',L'θ',L'ψ',L'ξ',L'ζ',L'ϵ',L'ϑ',
+		L'Ж',L'Щ',L'Ѧ',L'Җ',L'Ҩ',L'Ӝ',L'Ԇ',
+		L'∑',L'∂',L'∏',L'∩',L'∬',L'⊕',
+		L'★',L'♠',L'♣',L'♪',L'♯',L'░',L'▓'     // got chatGPT to generate unicode characters similiar to matrix movie
+	};
+	const wchar_t unicodeCharactersSnow[]
+	{
+		L'✼',L'❋',L'❊'
+	};
+	const wchar_t unicodeCharactersRain[]
+	{
+		L'░',L'▓'
+	};
+	const wchar_t unicodeCharactersDiamonds[]
+	{
+		L'⬖',L'⬗',L'⬘',L'⬙',L'◈'
+	};
+
+
+	static std::random_device rd; // random device to seed MT
+	static std::mt19937 mt{ rd() };   //Mersenne Twister 19937 https://en.wikipedia.org/wiki/Mersenne_Twister
+
+	/*
+	 rand() % n is biased apparently so using uniform_int_distribution instead.
+	 https://en.cppreference.com/w/cpp/numeric/random/uniform_real_distribution
+	*/
+	static std::uniform_int_distribution<size_t> disI(0, sizeof(unicodeCharacters) / sizeof(unicodeCharacters[0]));
+	const static size_t maxDepth = 50;
+
+	struct RainDropElement
+	{
+		const int x, y;  // x,y coords
+		wchar_t c;   // character
+		const wchar_t* charSet;
+		size_t charSetSize;
+
+		inline void changeRandomly(const float chance) {
+			static std::uniform_real_distribution<float> localDisF(0.0f, 1.0f); // rand num 
+			if (chance >= localDisF(mt)) {  // If the generated value is less than or equal to chance, change c
+				std::uniform_int_distribution<size_t> disI(0, charSetSize - 1); // random index within the range [0, charSetSize - 1]
+				c = charSet[disI(mt)]; //picks rand char from charSet
+			}
+		}
+
+		inline RainDropElement(const int x, const int y, const wchar_t* charSet, size_t charSetSize)
+			: x(x), y(y), c(L' '), charSet(charSet), charSetSize(charSetSize) // Member initializer list https://en.cppreference.com/w/cpp/language/constructor
+		{
+			changeRandomly(1);
+		}
+	};
+
 	class RainDrop {
 	public:
 		using raindrops_t = std::list<RainDropElement>;
@@ -52,29 +108,6 @@ namespace matrix
 		}
 
 	};
-
-	const wchar_t unicodeCharacters[]{
-			 L'Ƣ',L'Ʃ',L'Ʊ',L'Ƹ',L'ǂ',L'ƽ',L'ǌ',L'Ȣ',L'Ⱦ',L'Ƚ',L'ɑ',L'ɤ',L'ʑ',
-		L'ʫ',L'ʥ',L'ʮ',L'λ',L'ε',L'Ϡ',L'Ϟ',L'Ϡ',L'ϰ',L'Є',
-		L'ʃ',L'ʘ',L'ʭ',L'ʗ',L'ʡ',L'ʖ',L'ɕ',L'ɺ',L'ɧ',L'ʄ',
-		L'β',L'θ',L'ψ',L'ξ',L'ζ',L'ϵ',L'ϑ',
-		L'Ж',L'Щ',L'Ѧ',L'Җ',L'Ҩ',L'Ӝ',L'Ԇ',
-		L'∑',L'∂',L'∏',L'∩',L'∬',L'⊕',
-		L'★',L'♠',L'♣',L'♪',L'♯',L'░',L'▓'     // got chatGPT to generate unicode characters similiar to matrix movie
-	};
-	const wchar_t unicodeCharactersSnow[]
-	{
-		L'✼',L'❋',L'❊'
-	};
-	const wchar_t unicodeCharactersRain[]
-	{
-		L'░',L'▓'
-	};
-	const wchar_t unicodeCharactersDiamonds[]
-	{
-		L'⬖',L'⬗',L'⬘',L'⬙',L'◈'
-	};
-
 
 	enum class CharacterSet {
 		Standard,
@@ -124,39 +157,7 @@ namespace matrix
 		}
 	}
 
-	static std::random_device rd; // random device to seed MT
-	static std::mt19937 mt{ rd() };   //Mersenne Twister 19937 https://en.wikipedia.org/wiki/Mersenne_Twister
-
-	/*
-	 rand() % n is biased apparently so using uniform_int_distribution instead.
-	 https://en.cppreference.com/w/cpp/numeric/random/uniform_real_distribution
-	*/
-	static std::uniform_int_distribution<size_t> disI(0, sizeof(unicodeCharacters) / sizeof(unicodeCharacters[0]));
-	const static size_t maxDepth = 50;
-
-	struct RainDropElement
-	{
-		const int x, y;  // x,y coords
-		wchar_t c;   // character
-		const wchar_t* charSet;
-		size_t charSetSize;
-
-		inline void changeRandomly(const float chance){
-			static std::uniform_real_distribution<float> localDisF(0.0f, 1.0f); // rand num 
-			if (chance >= localDisF(mt)) {  // If the generated value is less than or equal to chance, change c
-				std::uniform_int_distribution<size_t> disI(0, charSetSize - 1); // random index within the range [0, charSetSize - 1]
-				c = charSet[disI(mt)]; //picks rand char from charSet
-			}
-		}
-
-		inline RainDropElement(const int x, const int y, const wchar_t* charSet, size_t charSetSize )
-			: x(x), y(y), c(L' '), charSet(charSet), charSetSize(charSetSize) // Member initializer list https://en.cppreference.com/w/cpp/language/constructor
-		{
-			changeRandomly(1);
-		}
-	};
-
-				
+	
 
 }
 
