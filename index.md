@@ -561,3 +561,7 @@ The main program flow:
 - [20]  https://en.cppreference.com/w/cpp/language/constructor
 - [21]  https://en.wikipedia.org/wiki/Mersenne_Twister
 - [22]  https://en.cppreference.com/w/cpp/numeric/random/uniform_real_distribution
+- [23] https://en.cppreference.com/w/cpp/utility/tuple/tie
+- [24] https://learn.microsoft.com/en-us/windows/console/console-screen-buffers
+- [25]  https://www.geeksforgeeks.org/vectoremplace_back-c-stl/
+- [26] https://en.cppreference.com/w/cpp/utility/tuple
