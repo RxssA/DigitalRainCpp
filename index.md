@@ -536,6 +536,9 @@ The main program flow:
 ## Issues
 - flickering of rain, at the time I thought this issue was caused by window size being set up incorrectly somehow. The issue fixed itself after maximizing and then minimizing the terminal window. I had tried setting the terminal window to be maxmized on startup, but everything I had tried doesn't seem to work, the fix was changing from C++11 to C++17, not sure how this fixed it yet.
 
+## Future Improvements
+- Remove nested loops from runRainAnimation()
+
 ## References
 - [1] Kevger. DoubleBufferedWindowsConsole (2020) https://github.com/Kevger/DoubleBufferedWindowsConsole/blob/master/source/DoubleBufferedConsole.h
 - [2]	https://learn.microsoft.com/en-us/windows/console/createconsolescreenbuffer
@@ -555,3 +558,6 @@ The main program flow:
 - [17]  https://learn.microsoft.com/en-us/windows/console/small-rect-str
 - [18]  https://learn.microsoft.com/en-us/windows/console/char-info-str
 - [19]  https://learn.microsoft.com/en-us/windows/console/coord-str
+- [20]  https://en.cppreference.com/w/cpp/language/constructor
+- [21]  https://en.wikipedia.org/wiki/Mersenne_Twister
+- [22]  https://en.cppreference.com/w/cpp/numeric/random/uniform_real_distribution
