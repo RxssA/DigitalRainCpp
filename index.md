@@ -497,6 +497,52 @@ int main()
 }
 }
 ```
+Unit tests [24] [21] [25]
+```cpp
+void testRainDropBasics() {
+    matrix::RainDrop drop(10, 5, 20, 0.5f, L"AB", 2);
+
+    // Initial state
+    assert(drop.get().empty() && "New drop should be empty");
+
+    // Basic falling
+    drop.fall();
+    assert(drop.get().size() == 1 && "Should add first element");
+
+    std::cout << "testRainDropBasics: OK\n";
+}
+
+void testRainDropLimits() {
+    matrix::RainDrop drop(5, 0, 10, 0.5f, L"X", 1);
+
+    // Test max size
+    for (int i = 0; i < 10; i++) {
+        drop.fall();
+        ++drop;  // Increase size
+    }
+    assert(drop.get().size() <= 5 && "Should respect max size");
+
+    std::cout << "testRainDropLimits: OK\n";
+}
+
+void testCharacterSets() {
+    using namespace matrix;
+
+    // Test default set
+    assert(getCharacterSet(CharacterSet::Standard)[0] != L' ' && "Default chars loaded");
+    assert(getCharacterSetSize(CharacterSet::Snow) == 3 && "Snow set size correct");
+
+    std::cout << "testCharacterSets: OK\n";
+}
+
+void runAllTests() {
+    testRainDropBasics();
+    testRainDropLimits();
+    testCharacterSets();
+
+    std::cout << "\nAll essential tests passed!\n";
+}
+```
 
 The main program flow:
 1. Displays menu and gets user choices
@@ -578,3 +624,7 @@ The main program flow:
 [22] https://learn.microsoft.com/en-us/windows/win32/api/
 
 [23] https://en.wikipedia.org/wiki/Conio.h
+
+[24] https://www.geeksforgeeks.org/a-comprehensive-guide-to-unit-testing-in-c/
+
+[25] M. Lynch "Exceptions". Lecture, ATU, Galway, ATU 2025
