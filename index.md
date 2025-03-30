@@ -93,8 +93,8 @@ inline const wchar_t* getCharacterSet(CharacterSet set) {
 ```
 ### getCharacterSetSize
 This gives us the total size in bytes of the entire array. For example, if unicodeCharacters is an array of 50 wchar_t elements
-And each wchar_t is 2 bytes (on Windows) Then sizeof(unicodeCharacters) would be 100 bytes (50 × 2). sizeof(unicodeCharacters[0]):
-This gives us the size in bytes of a single elementIn this case, it's the size of one wchar_t, On Windows, this would be 2 bytes. When we divide the total array size by the size of one element. We get the number of elements in the array. This is a safer way to get the array size than manually counting elements because:
+and each wchar_t is 2 bytes (on Windows) then sizeof(unicodeCharacters) would be 100 bytes (50 × 2). sizeof(unicodeCharacters[0]):
+This gives us the size in bytes of a single element. In this case, it's the size of one wchar_t, On Windows, this would be 2 bytes. When we divide the total array size by the size of one element. We get the number of elements in the array. This is a safer way to get the array size than manually counting elements because:
 It automatically updates if you add or remove elements
 It's less prone to errors than manual counting
 It works with any array type. [21] [22]
