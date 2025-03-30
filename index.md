@@ -23,7 +23,7 @@ A C++ console application that simulates the iconic "Matrix" falling code effect
 
 ### 1. Character Sets and Enums
 The program defines different sets of Unicode characters for various visual effects. Each set is carefully chosen to create distinct visual styles:
-This set includes mathematical symbols, Greek letters, and special characters that create the classic Matrix "digital rain" look.
+This set includes mathematical symbols, Greek letters, and special characters that create the classic "Matrix" digital rain look.
 ```cpp
 // Matrix-style characters (default)
 const wchar_t unicodeCharacters[]{
