@@ -502,7 +502,8 @@ int main()
 Unit tests [24] [21] [25]
 - testRainDropBasics() - A newly created RainDrop should start empty (get().empty()), After calling fall(), the drop should grow by one character (size() == 1).
 - testRainDropLimits() - A raindrop with a max size of 5 should not exceed that limit, even after multiple fall() and size-increase (++drop) operations.
-- testCharacterSets() - The default character set should not be empty (first character is not a space). The "Snow" set should contain exactly 3 characters (e.g., ❄, ·, etc.).
+- testCharacterSets() - The default character set should not be empty (first character is not a space). The "Snow" set should contain exactly 3 characters.
+
 ```cpp
 void testRainDropBasics() {
     matrix::RainDrop drop(10, 5, 20, 0.5f, L"AB", 2);
