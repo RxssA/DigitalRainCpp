@@ -232,7 +232,7 @@ The DoubleBufferedConsole class implements double buffering for smooth screen up
 - Manages console window setup and cleanup
 - Supports both Unicode and ASCII characters
 
-### See References section for the resources used to gain a better understanding of the DoubleBufferedConsole and Windows api.
+### See References section for the resources used to gain a better understanding of the DoubleBufferedConsole and Windows api. [2]-[14]
 ```cpp
 template<typename char_t = wchar_t>
 class DoubleBufferedConsole {
