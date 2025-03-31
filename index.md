@@ -232,6 +232,9 @@ The DoubleBufferedConsole class implements double buffering for smooth screen up
 - Manages console window setup and cleanup
 - Supports both Unicode and ASCII characters
 
+### Detailed Explaination of the DoubleBufferedConsole
+The `DoubleBufferedConsole` class is designed to provide smooth rendering in the console application by implementing double buffering, a technique that reduces flickering and improves performance by rendering frames off-screen before displaying them. The class DoubleBufferedConsole manages two console screen buffers, switching between them to ensure seamless transitions. Key components include a pair of buffer handles, a `SMALL_RECT` [12] defining the update region, and a dynamically allocated `CHAR_INFO`[13] buffer that stores character and attribute data for the next frame. The constructor initializes these buffers, sets console dimensions, and configures cursor visibility, while the destructor ensures proper cleanup by deallocating memory [26]. The `flip` method swaps the active buffer, copying the prepared frame from the intermediate buffer to the inactive console buffer before making it visible. The `clear` method fills the buffer with a specified character and attribute in this case a white space, while the `write` method updates individual positions, handling both ASCII and Unicode via template specialization. By separating rendering and display operations, the class ensures stable output, making it ideal for applications like games or real-time visualizations where smooth updates are critical. The design leverages Windows Console API functions such as `CreateConsoleScreenBuffer`, `WriteConsoleOutput`, and `SetConsoleActiveScreenBuffer` to manage buffering efficiently, providing solution for high-performance console rendering.
+
 ### See References section for the resources used to gain a better understanding of the DoubleBufferedConsole and Windows api. [2]-[14]
 ```cpp
 template<typename char_t = wchar_t>
@@ -627,3 +630,5 @@ The main program flow:
 [24] https://www.geeksforgeeks.org/a-comprehensive-guide-to-unit-testing-in-c/
 
 [25] M. Lynch "Exceptions". Lecture, ATU, Galway, ATU 2025
+
+[26] https://en.cppreference.com/w/cpp/memory/new/operator_delete
