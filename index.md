@@ -550,7 +550,7 @@ void runAllTests() {
 }
 ```
 
-The main program flow:
+## The main program flow:
 1. Displays menu and gets user choices
 2. Initializes console and raindrops
 3. Runs animation loop
@@ -580,6 +580,7 @@ The main program flow:
 
 ## Issues
 - flickering of rain, at the time I thought this issue was caused by window size being set up incorrectly somehow. The issue fixed itself after maximizing and then minimizing the terminal window. I had tried setting the terminal window to be maxmized on startup, but everything I had tried doesn't seem to work, the fix was changing from C++11 to C++17, not sure how this fixed it yet.
+- Originally, I experimented with different console fonts and UTF-16 encoding to display special Unicode characters. However, the console struggled to render them correctly, displaying '?' instead. Using wchar_t arrays with the L prefix worked in displaying Unicode characters correctly.
 
 ## Future Improvements
 - Remove nested loops from runRainAnimation()
