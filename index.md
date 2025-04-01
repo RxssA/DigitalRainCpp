@@ -344,7 +344,7 @@ public:
 ### 7. Main Program Flow
 The main program handles user interaction and animation:
 
-This shouldExit() function checks for a key press using _kbhit() from the conio.h library and returns true if the 'q' key is pressed, stopping the rain loop and returning to the menu.
+This shouldExit() function checks for a key press using _kbhit() from the conio.h library[23] and returns true if the 'q' key is pressed, stopping the rain loop and returning to the menu.
 ```cpp
 bool shouldExit()
 {
