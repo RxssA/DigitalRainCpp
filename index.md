@@ -588,52 +588,52 @@ void runAllTests() {
 ## References
 [1] Kevger (2020) DoubleBufferedWindowsConsole. GitHub. Available at: https://github.com/Kevger/DoubleBufferedWindowsConsole/blob/master/source/DoubleBufferedConsole.h
 
-[2] Microsoft (n.d.) CreateConsoleScreenBuffer function. Available at: https://learn.microsoft.com/en-us/windows/console/createconsolescreenbuffer
+[2] Microsoft CreateConsoleScreenBuffer function. Available at: https://learn.microsoft.com/en-us/windows/console/createconsolescreenbuffer
 
-[3] Microsoft (n.d.) SetConsoleScreenBufferSize function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsolescreenbuffersize
+[3] Microsoft SetConsoleScreenBufferSize function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsolescreenbuffersize
 
-[4] Microsoft (n.d.) SetConsoleWindowInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsolewindowinfo
+[4] Microsoft SetConsoleWindowInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsolewindowinfo
 
-[5] Microsoft (n.d.) GetConsoleCursorInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/getconsolecursorinfo
+[5] Microsoft GetConsoleCursorInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/getconsolecursorinfo
 
-[6] Microsoft (n.d.) SetConsoleCursorInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsolecursorinfo
+[6] Microsoft SetConsoleCursorInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsolecursorinfo
 
-[7] Microsoft (n.d.) SetConsoleTitle function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsoletitle
+[7] Microsoft SetConsoleTitle function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsoletitle
 
-[8] Microsoft (n.d.) WriteConsoleOutput function. Available at: https://learn.microsoft.com/en-us/windows/console/writeconsoleoutput
+[8] Microsoft WriteConsoleOutput function. Available at: https://learn.microsoft.com/en-us/windows/console/writeconsoleoutput
 
-[9] Microsoft (n.d.) SetConsoleActiveScreenBuffer function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsoleactivescreenbuffer
+[9] Microsoft SetConsoleActiveScreenBuffer function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsoleactivescreenbuffer
 
-[10] Microsoft (n.d.) GetConsoleScreenBufferInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/getconsolescreenbufferinfo
+[10] Microsoft GetConsoleScreenBufferInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/getconsolescreenbufferinfo
 
-[11] Microsoft (n.d.) HANDLE type. Available at: https://learn.microsoft.com/en-us/windows/win32/winprog/windows-data-types#handle
+[11] Microsoft HANDLE type. Available at: https://learn.microsoft.com/en-us/windows/win32/winprog/windows-data-types#handle
 
-[12] Microsoft (n.d.) SMALL_RECT structure. Available at: https://learn.microsoft.com/en-us/windows/console/small-rect-str
+[12] Microsoft SMALL_RECT structure. Available at: https://learn.microsoft.com/en-us/windows/console/small-rect-str
 
-[13] Microsoft (n.d.) CHAR_INFO structure. Available at: https://learn.microsoft.com/en-us/windows/console/char-info-str
+[13] Microsoft CHAR_INFO structure. Available at: https://learn.microsoft.com/en-us/windows/console/char-info-str
 
-[14] Microsoft (n.d.) COORD structure. Available at: https://learn.microsoft.com/en-us/windows/console/coord-str
+[14] Microsoft COORD structure. Available at: https://learn.microsoft.com/en-us/windows/console/coord-str
 
-[15] cppreference (n.d.) Constructors and member initializer lists. Available at: https://en.cppreference.com/w/cpp/language/constructor
+[15] cppreference Constructors and member initializer lists. Available at: https://en.cppreference.com/w/cpp/language/constructor
 
-[16] Wikipedia (n.d.) Mersenne Twister. Available at: https://en.wikipedia.org/wiki/Mersenne_Twister
+[16] Wikipedia Mersenne Twister. Available at: https://en.wikipedia.org/wiki/Mersenne_Twister
 
-[17] cppreference (n.d.) std::uniform_real_distribution. Available at: https://en.cppreference.com/w/cpp/numeric/random/uniform_real_distribution
+[17] cppreference std::uniform_real_distribution. Available at: https://en.cppreference.com/w/cpp/numeric/random/uniform_real_distribution
 
-[18] cppreference (n.d.) std::tuple. Available at: https://en.cppreference.com/w/cpp/utility/tuple
+[18] cppreference std::tuple. Available at: https://en.cppreference.com/w/cpp/utility/tuple
 
-[19] Microsoft (n.d.) Console screen buffers. Available at: https://learn.microsoft.com/en-us/windows/console/console-screen-buffers
+[19] Microsoft Console screen buffers. Available at: https://learn.microsoft.com/en-us/windows/console/console-screen-buffers
 
-[20] GeeksforGeeks (n.d.) vector::emplace_back in C++ STL. Available at: https://www.geeksforgeeks.org/vectoremplace_back-c-stl/
+[20] GeeksforGeeks vector::emplace_back in C++ STL. Available at: https://www.geeksforgeeks.org/vectoremplace_back-c-stl/
 
-[21] DeepSeek AI (n.d.) DeepSeek-R1-Lite-Preview. Available at: https://platform.deepseek.com/
+[21] DeepSeek AI DeepSeek-R1-Lite-Preview. Available at: https://platform.deepseek.com/
 
-[22] https://learn.microsoft.com/en-us/windows/win32/api/
+[22] Microsoft https://learn.microsoft.com/en-us/windows/win32/api/
 
-[23] https://en.wikipedia.org/wiki/Conio.h
+[23] Wikipedia https://en.wikipedia.org/wiki/Conio.h
 
-[24] https://www.geeksforgeeks.org/a-comprehensive-guide-to-unit-testing-in-c/
+[24] GeeksforGeeks https://www.geeksforgeeks.org/a-comprehensive-guide-to-unit-testing-in-c/
 
 [25] M. Lynch "Exceptions". Lecture, ATU, Galway, ATU 2025
 
-[26] https://en.cppreference.com/w/cpp/memory/new/operator_delete
+[26] cppreference https://en.cppreference.com/w/cpp/memory/new/operator_delete
