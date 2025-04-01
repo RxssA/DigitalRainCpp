@@ -584,6 +584,7 @@ void runAllTests() {
 
 ## Future Improvements
 - Remove nested loops from runRainAnimation()
+- Make size of console dynamic, so the rain fills all of the screen when console size is changed.
 
 ## References
 [1] Kevger (2020) DoubleBufferedWindowsConsole. GitHub. Available at: https://github.com/Kevger/DoubleBufferedWindowsConsole/blob/master/source/DoubleBufferedConsole.h
