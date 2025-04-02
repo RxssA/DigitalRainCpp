@@ -1,12 +1,13 @@
-﻿#ifndef RAIN_DROP_H
-#define RAIN_DROP_H
-
-/*
+﻿/*
 	Digital Rain
 	Ross Amritage
 	G00401655
 	16/02/2025
 */
+#ifndef RAIN_DROP_H
+#define RAIN_DROP_H
+
+
 
 #include <random> 
 #include <list>
