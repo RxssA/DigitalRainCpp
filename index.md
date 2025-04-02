@@ -3,12 +3,11 @@ layout: default
 ---
 
 # Digital Rain Animation
-A C++ console application that simulates the iconic "Matrix" falling code effect. Using multithreading, double buffering, and randomization, the program generates cascading streams of Unicode characters that dynamically change and flow down the screen, mimicking the visual style from the Matrix movies.
-
-![Matrix Rain Effect](docs/assets/images/2025-03-1418-05-19-ezgif.com-video-to-gif-converter.gif)
+A C++ console application that simulates "Digital Rain" much like the iconic "Matrix" falling code effect. Using multithreading, double buffering, and randomization, the program generates cascading streams of Unicode characters that dynamically change and flow down the screen, mimicking the visual style from the Matrix movies.
 
 ![Menu Interface](docs/assets/images/Screenshot 2025-03-29 210840.png)
 ![Menu Interface1](docs/assets/images/Screenshot 2025-03-29 210814.png)
+![Matrix Rain Effect](docs/assets/images/2025-03-1418-05-19-ezgif.com-video-to-gif-converter.gif)
 
 ## Features
 - **Realistic Falling Code Effect** – Uses a list-based system to manage individual character streams
@@ -23,7 +22,7 @@ A C++ console application that simulates the iconic "Matrix" falling code effect
 
 ### 1. Character Sets and Enums
 The program defines different sets of Unicode characters for various visual effects. Each set is carefully chosen to create distinct visual styles:
-This set includes mathematical symbols, Greek letters, and special characters that create the classic "Matrix" digital rain look.
+This set includes mathematical symbols, Greek letters, and special characters that create the classic "Matrix" digital rain look. [27]
 ```cpp
 // Matrix-style characters (default)
 const wchar_t unicodeCharacters[]{
@@ -36,28 +35,28 @@ const wchar_t unicodeCharacters[]{
     L'★',L'♠',L'♣',L'♪',L'♯',L'░',L'▓'
 };
 ```
-These characters create a snowflake-like effect.
+These characters create a snowflake-like effect. [27]
 ```cpp
 // Snow effect characters
 const wchar_t unicodeCharactersSnow[]{
     L'✼',L'❋',L'❊'
 };
 ```
-These characters create a simple rain effect using different shades of blocks.
+These characters create a simple rain effect using different shades of blocks. [27]
 ```cpp
 // Rain effect characters
 const wchar_t unicodeCharactersRain[]{
     L'░',L'▓'
 };
 ```
-These characters create a diamond pattern effect.
+These characters create a diamond pattern effect. [27]
 ```cpp
 // Diamond effect characters
 const wchar_t unicodeCharactersDiamonds[]{
     L'⬖',L'⬗',L'⬘',L'⬙',L'◈'
 };
 ```
-The `CharacterSet` enum allows selection between different character sets:
+The `CharacterSet` enum[28] allows selection between different character sets: 
 ```cpp
 enum class CharacterSet {
     Standard,  // Matrix style - uses mathematical and special characters
@@ -68,7 +67,7 @@ enum class CharacterSet {
 ```
 
 ### 2. Character Set Management
-Helper functions to manage character sets:
+Helper functions to manage character sets [29]
 ```cpp
 // Returns the appropriate character set based on selection
 inline const wchar_t* getCharacterSet(CharacterSet set) {
@@ -233,7 +232,10 @@ The DoubleBufferedConsole class implements double buffering for smooth screen up
 - Manages console window setup and cleanup
 - Supports both Unicode and ASCII characters
 
-# See References section for the resources used to gain a better understanding of the DoubleBufferedConsole and Windows api.
+### Detailed Explaination of the DoubleBufferedConsole
+The `DoubleBufferedConsole` class is designed to provide smooth rendering in the console application by implementing double buffering, a technique that reduces flickering and improves performance by rendering frames off-screen before displaying them. The class DoubleBufferedConsole manages two console screen buffers, switching between them to ensure seamless transitions. Key components include a pair of buffer handles, a `SMALL_RECT` [12] defining the update region, and a dynamically allocated `CHAR_INFO`[13] buffer that stores character and attribute data for the next frame. The constructor initializes these buffers, sets console dimensions, and configures cursor visibility, while the destructor ensures proper cleanup by deallocating memory [26]. The `flip` method swaps the active buffer, copying the prepared frame from the intermediate buffer to the inactive console buffer before making it visible. The `clear` method fills the buffer with a specified character and attribute in this case a white space, while the `write` method updates individual positions, handling both ASCII and Unicode via template specialization. By separating rendering and display operations, the class ensures stable output, making it ideal for applications like games or real-time visualizations where smooth updates are critical. The design leverages Windows Console API functions such as `CreateConsoleScreenBuffer`, `WriteConsoleOutput`, and `SetConsoleActiveScreenBuffer` to manage buffering efficiently, providing solution for high-performance console rendering.
+
+### See References section for the resources used to gain a better understanding of the DoubleBufferedConsole and Windows api. [2]-[14],[21]
 ```cpp
 template<typename char_t = wchar_t>
 class DoubleBufferedConsole {
@@ -342,7 +344,7 @@ public:
 ### 7. Main Program Flow
 The main program handles user interaction and animation:
 
-This shouldExit() function checks for a key press using _kbhit() from the conio.h library and returns true if the 'q' key is pressed, stopping the rain loop and returning to the menu.
+This shouldExit() function checks for a key press using _kbhit() from the conio.h library[23] and returns true if the 'q' key is pressed, stopping the rain loop and returning to the menu.
 ```cpp
 bool shouldExit()
 {
@@ -422,7 +424,7 @@ WORD selectRainColor()
     }
 }
 ```
-The `runRainAnimation` function manages the Matrix-style rain animation. It initializes raindrops, updates their positions in a loop, and redraws them on a double-buffered console. It continuously checks for user input (`q` to exit)[23], handles resizing, and refreshes at a set rate.
+The `runRainAnimation` function manages the Matrix-style rain animation. It initializes raindrops, updates their positions in a loop, and redraws them on a double-buffered console. It continuously checks for user input (`q` to exit)[23], handles resizing, and refreshes at a set rate. [30][18][1][21]
 ```cpp
 void runRainAnimation(matrix::CharacterSet selectedSet, WORD txtAttributes)
 {
@@ -476,7 +478,7 @@ The startRainSimulation function runs an infinite loop where it repeatedly:
 Selects a character set for the rain animation.
 Selects the rain colour attributes.
 Calls runRainAnimation to start the animation with the chosen settings.
-It continuously restarts after each animation session.
+It continuously restarts after each animation session.[22]
 ```cpp
 void startRainSimulation()
 {
@@ -497,8 +499,58 @@ int main()
 }
 }
 ```
+Unit tests [24] [21] [25]
+- testRainDropBasics() - A newly created RainDrop should start empty (get().empty()), After calling fall(), the drop should grow by one character (size() == 1).
+- testRainDropLimits() - A raindrop with a max size of 5 should not exceed that limit, even after multiple fall() and size-increase (++drop) operations.
+- testCharacterSets() - The default character set should not be empty (first character is not a space). The "Snow" set should contain exactly 3 characters.
 
-The main program flow:
+```cpp
+void testRainDropBasics() {
+    matrix::RainDrop drop(10, 5, 20, 0.5f, L"AB", 2);
+
+    // Initial state
+    assert(drop.get().empty() && "New drop should be empty");
+
+    // Basic falling
+    drop.fall();
+    assert(drop.get().size() == 1 && "Should add first element");
+
+    std::cout << "testRainDropBasics: OK\n";
+}
+
+void testRainDropLimits() {
+    matrix::RainDrop drop(5, 0, 10, 0.5f, L"X", 1);
+
+    // Test max size
+    for (int i = 0; i < 10; i++) {
+        drop.fall();
+        ++drop;  // Increase size
+    }
+    assert(drop.get().size() <= 5 && "Should respect max size");
+
+    std::cout << "testRainDropLimits: OK\n";
+}
+
+void testCharacterSets() {
+    using namespace matrix;
+
+    // Test default set
+    assert(getCharacterSet(CharacterSet::Standard)[0] != L' ' && "Default chars loaded");
+    assert(getCharacterSetSize(CharacterSet::Snow) == 3 && "Snow set size correct");
+
+    std::cout << "testCharacterSets: OK\n";
+}
+
+void runAllTests() {
+    testRainDropBasics();
+    testRainDropLimits();
+    testCharacterSets();
+
+    std::cout << "\nAll essential tests passed!\n";
+}
+```
+
+## The main program flow:
 1. Displays menu and gets user choices
 2. Initializes console and raindrops
 3. Runs animation loop
@@ -527,54 +579,75 @@ The main program flow:
 - Modern C++ features (C++17 or later)
 
 ## Issues
-- flickering of rain, at the time I thought this issue was caused by window size being set up incorrectly somehow. The issue fixed itself after maximizing and then minimizing the terminal window. I had tried setting the terminal window to be maxmized on startup, but everything I had tried doesn't seem to work, the fix was changing from C++11 to C++17, not sure how this fixed it yet.
+- flickering of rain, at the time I thought this issue was caused by window size being set up incorrectly somehow. The issue fixed itself after maximizing and then minimizing the terminal window. I had tried setting the terminal window to be maxmized on startup, but everything I had tried didn't seem to work, the fix was changing from C++11 to C++17, because C++17 introduced more precise timing control with std::this_thread::sleep_for, meaning smoother frame pacing and eliminating rendering inconsistencies. The use of if constexpr in DoubleBufferedConsole optimized template handling by removing unused branches at compile-time, making character rendering more efficient. Also, C++17's stricter thread safety guarantees and memory optimizations prevented race conditions[31] during buffer swaps, which were causing the flickering in C++11. The act of maximizing and minimizing the console in C++11 temporarily fixed the issue by resetting the buffer.[21]
+- Originally, I experimented with different console fonts and UTF-16 encoding to display special Unicode characters. However, the console struggled to render them correctly, displaying '?' instead. Using wchar_t arrays with the L prefix[32] worked in displaying Unicode characters correctly.
 
 ## Future Improvements
 - Remove nested loops from runRainAnimation()
+- Make size of console dynamic, so the rain fills all of the screen when console size is changed.
+- Add error handling when user enters anything but a char/int in the menu.
 
 ## References
 [1] Kevger (2020) DoubleBufferedWindowsConsole. GitHub. Available at: https://github.com/Kevger/DoubleBufferedWindowsConsole/blob/master/source/DoubleBufferedConsole.h
 
-[2] Microsoft (n.d.) CreateConsoleScreenBuffer function. Available at: https://learn.microsoft.com/en-us/windows/console/createconsolescreenbuffer
+[2] Microsoft CreateConsoleScreenBuffer function. Available at: https://learn.microsoft.com/en-us/windows/console/createconsolescreenbuffer
 
-[3] Microsoft (n.d.) SetConsoleScreenBufferSize function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsolescreenbuffersize
+[3] Microsoft SetConsoleScreenBufferSize function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsolescreenbuffersize
 
-[4] Microsoft (n.d.) SetConsoleWindowInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsolewindowinfo
+[4] Microsoft SetConsoleWindowInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsolewindowinfo
 
-[5] Microsoft (n.d.) GetConsoleCursorInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/getconsolecursorinfo
+[5] Microsoft GetConsoleCursorInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/getconsolecursorinfo
 
-[6] Microsoft (n.d.) SetConsoleCursorInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsolecursorinfo
+[6] Microsoft SetConsoleCursorInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsolecursorinfo
 
-[7] Microsoft (n.d.) SetConsoleTitle function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsoletitle
+[7] Microsoft SetConsoleTitle function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsoletitle
 
-[8] Microsoft (n.d.) WriteConsoleOutput function. Available at: https://learn.microsoft.com/en-us/windows/console/writeconsoleoutput
+[8] Microsoft WriteConsoleOutput function. Available at: https://learn.microsoft.com/en-us/windows/console/writeconsoleoutput
 
-[9] Microsoft (n.d.) SetConsoleActiveScreenBuffer function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsoleactivescreenbuffer
+[9] Microsoft SetConsoleActiveScreenBuffer function. Available at: https://learn.microsoft.com/en-us/windows/console/setconsoleactivescreenbuffer
 
-[10] Microsoft (n.d.) GetConsoleScreenBufferInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/getconsolescreenbufferinfo
+[10] Microsoft GetConsoleScreenBufferInfo function. Available at: https://learn.microsoft.com/en-us/windows/console/getconsolescreenbufferinfo
 
-[11] Microsoft (n.d.) HANDLE type. Available at: https://learn.microsoft.com/en-us/windows/win32/winprog/windows-data-types#handle
+[11] Microsoft HANDLE type. Available at: https://learn.microsoft.com/en-us/windows/win32/winprog/windows-data-types#handle
 
-[12] Microsoft (n.d.) SMALL_RECT structure. Available at: https://learn.microsoft.com/en-us/windows/console/small-rect-str
+[12] Microsoft SMALL_RECT structure. Available at: https://learn.microsoft.com/en-us/windows/console/small-rect-str
 
-[13] Microsoft (n.d.) CHAR_INFO structure. Available at: https://learn.microsoft.com/en-us/windows/console/char-info-str
+[13] Microsoft CHAR_INFO structure. Available at: https://learn.microsoft.com/en-us/windows/console/char-info-str
 
-[14] Microsoft (n.d.) COORD structure. Available at: https://learn.microsoft.com/en-us/windows/console/coord-str
+[14] Microsoft COORD structure. Available at: https://learn.microsoft.com/en-us/windows/console/coord-str
 
-[15] cppreference (n.d.) Constructors and member initializer lists. Available at: https://en.cppreference.com/w/cpp/language/constructor
+[15] cppreference Constructors and member initializer lists. Available at: https://en.cppreference.com/w/cpp/language/constructor
 
-[16] Wikipedia (n.d.) Mersenne Twister. Available at: https://en.wikipedia.org/wiki/Mersenne_Twister
+[16] Wikipedia Mersenne Twister. Available at: https://en.wikipedia.org/wiki/Mersenne_Twister
 
-[17] cppreference (n.d.) std::uniform_real_distribution. Available at: https://en.cppreference.com/w/cpp/numeric/random/uniform_real_distribution
+[17] cppreference std::uniform_real_distribution. Available at: https://en.cppreference.com/w/cpp/numeric/random/uniform_real_distribution
 
-[18] cppreference (n.d.) std::tuple. Available at: https://en.cppreference.com/w/cpp/utility/tuple
+[18] cppreference std::tuple. Available at: https://en.cppreference.com/w/cpp/utility/tuple
 
-[19] Microsoft (n.d.) Console screen buffers. Available at: https://learn.microsoft.com/en-us/windows/console/console-screen-buffers
+[19] Microsoft Console screen buffers. Available at: https://learn.microsoft.com/en-us/windows/console/console-screen-buffers
 
-[20] GeeksforGeeks (n.d.) vector::emplace_back in C++ STL. Available at: https://www.geeksforgeeks.org/vectoremplace_back-c-stl/
+[20] GeeksforGeeks vector::emplace_back in C++ STL. Available at: https://www.geeksforgeeks.org/vectoremplace_back-c-stl/
 
-[21] DeepSeek AI (n.d.) DeepSeek-R1-Lite-Preview. Available at: https://platform.deepseek.com/
+[21] DeepSeek AI DeepSeek-R1-Lite-Preview. Available at: https://platform.deepseek.com/
 
-[22] https://learn.microsoft.com/en-us/windows/win32/api/
+[22] Microsoft https://learn.microsoft.com/en-us/windows/win32/api/
 
-[23] https://en.wikipedia.org/wiki/Conio.h
+[23] Wikipedia https://en.wikipedia.org/wiki/Conio.h
+
+[24] GeeksforGeeks https://www.geeksforgeeks.org/a-comprehensive-guide-to-unit-testing-in-c/
+
+[25] M. Lynch "Exceptions". Lecture, ATU, Galway, ATU 2025
+
+[26] cppreference https://en.cppreference.com/w/cpp/memory/new/operator_delete
+
+[27] copypastecharacter https://copypastecharacter.com/all-characters
+
+[28] GeeksforGeeks https://www.geeksforgeeks.org/enumeration-in-cpp/
+
+[29] GeeksforGeeks https://www.geeksforgeeks.org/inline-functions-cpp/
+
+[30] cppreference vector https://en.cppreference.com/w/cpp/container/vector
+
+[31] GeeksforGeeks https://www.geeksforgeeks.org/implementing-race-condition-in-c/
+
+[32] cppreference string_literal https://en.cppreference.com/w/c/language/string_literal
