@@ -587,6 +587,9 @@ void runAllTests() {
 - Make size of console dynamic, so the rain fills all of the screen when console size is changed.
 - Add error handling when user enters anything but a char/int in the menu.
 
+## Reflection
+This C++ project was an great opportunity to explore advanced programming concepts while creating a project that was both fun and visually impressive, to me atleast =). I learnt so much in the development of this, Double Buffered console rendering, efficient memory management, unicode characters handling, efficient c++ techniques, and multithreading techniques, now I feel confident in my c++ skills.
+
 ## References
 [1] Kevger (2020) DoubleBufferedWindowsConsole. GitHub. Available at: https://github.com/Kevger/DoubleBufferedWindowsConsole/blob/master/source/DoubleBufferedConsole.h
 
