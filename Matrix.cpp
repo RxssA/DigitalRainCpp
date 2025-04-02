@@ -1,13 +1,20 @@
+/*
+    Digital Rain
+    Ross Amritage
+    G00401655
+    16/02/2025
+*/
+
 #include <iostream>
-#include <thread> 
-#include <chrono>
+#include <thread> //threads
+#include <chrono> // easier to time values
 #include <vector>
 #include <random>
-#include <tuple>
+#include <tuple> // returning 2 from on function
 #include "RainDrop.h"
 #include "DoubleBufferedConsole.h"
-#include <conio.h>
-#include <windows.h>
+#include <conio.h>  //kbhit
+#include <windows.h> //windows api
 #include "MatrixTest.h"
 
 using namespace std::chrono_literals;
@@ -145,7 +152,7 @@ void startRainSimulation()
 
 int main()
 {
-    runAllTests();
-    //startRainSimulation();
+    //runAllTests();
+    startRainSimulation();
     return 0;
 }
