@@ -22,7 +22,7 @@ A C++ console application that simulates "Digital Rain" much like the iconic "Ma
 
 ### 1. Character Sets and Enums
 The program defines different sets of Unicode characters for various visual effects. Each set is carefully chosen to create distinct visual styles:
-This set includes mathematical symbols, Greek letters, and special characters that create the classic "Matrix" digital rain look.
+This set includes mathematical symbols, Greek letters, and special characters that create the classic "Matrix" digital rain look. [27]
 ```cpp
 // Matrix-style characters (default)
 const wchar_t unicodeCharacters[]{
@@ -35,28 +35,28 @@ const wchar_t unicodeCharacters[]{
     L'★',L'♠',L'♣',L'♪',L'♯',L'░',L'▓'
 };
 ```
-These characters create a snowflake-like effect.
+These characters create a snowflake-like effect. [27]
 ```cpp
 // Snow effect characters
 const wchar_t unicodeCharactersSnow[]{
     L'✼',L'❋',L'❊'
 };
 ```
-These characters create a simple rain effect using different shades of blocks.
+These characters create a simple rain effect using different shades of blocks. [27]
 ```cpp
 // Rain effect characters
 const wchar_t unicodeCharactersRain[]{
     L'░',L'▓'
 };
 ```
-These characters create a diamond pattern effect.
+These characters create a diamond pattern effect. [27]
 ```cpp
 // Diamond effect characters
 const wchar_t unicodeCharactersDiamonds[]{
     L'⬖',L'⬗',L'⬘',L'⬙',L'◈'
 };
 ```
-The `CharacterSet` enum allows selection between different character sets:
+The `CharacterSet` enum[28] allows selection between different character sets: 
 ```cpp
 enum class CharacterSet {
     Standard,  // Matrix style - uses mathematical and special characters
@@ -67,7 +67,7 @@ enum class CharacterSet {
 ```
 
 ### 2. Character Set Management
-Helper functions to manage character sets:
+Helper functions to manage character sets [29]
 ```cpp
 // Returns the appropriate character set based on selection
 inline const wchar_t* getCharacterSet(CharacterSet set) {
@@ -424,7 +424,7 @@ WORD selectRainColor()
     }
 }
 ```
-The `runRainAnimation` function manages the Matrix-style rain animation. It initializes raindrops, updates their positions in a loop, and redraws them on a double-buffered console. It continuously checks for user input (`q` to exit)[23], handles resizing, and refreshes at a set rate.
+The `runRainAnimation` function manages the Matrix-style rain animation. It initializes raindrops, updates their positions in a loop, and redraws them on a double-buffered console. It continuously checks for user input (`q` to exit)[23], handles resizing, and refreshes at a set rate. [30][18][1][21]
 ```cpp
 void runRainAnimation(matrix::CharacterSet selectedSet, WORD txtAttributes)
 {
@@ -478,7 +478,7 @@ The startRainSimulation function runs an infinite loop where it repeatedly:
 Selects a character set for the rain animation.
 Selects the rain colour attributes.
 Calls runRainAnimation to start the animation with the chosen settings.
-It continuously restarts after each animation session.
+It continuously restarts after each animation session.[22]
 ```cpp
 void startRainSimulation()
 {
@@ -579,12 +579,13 @@ void runAllTests() {
 - Modern C++ features (C++17 or later)
 
 ## Issues
-- flickering of rain, at the time I thought this issue was caused by window size being set up incorrectly somehow. The issue fixed itself after maximizing and then minimizing the terminal window. I had tried setting the terminal window to be maxmized on startup, but everything I had tried doesn't seem to work, the fix was changing from C++11 to C++17, not sure how this fixed it yet.
-- Originally, I experimented with different console fonts and UTF-16 encoding to display special Unicode characters. However, the console struggled to render them correctly, displaying '?' instead. Using wchar_t arrays with the L prefix worked in displaying Unicode characters correctly.
+- flickering of rain, at the time I thought this issue was caused by window size being set up incorrectly somehow. The issue fixed itself after maximizing and then minimizing the terminal window. I had tried setting the terminal window to be maxmized on startup, but everything I had tried didn't seem to work, the fix was changing from C++11 to C++17, because C++17 introduced more precise timing control with std::this_thread::sleep_for, meaning smoother frame pacing and eliminating rendering inconsistencies. The use of if constexpr in DoubleBufferedConsole optimized template handling by removing unused branches at compile-time, making character rendering more efficient. Also, C++17's stricter thread safety guarantees and memory optimizations prevented race conditions[31] during buffer swaps, which were causing the flickering in C++11. The act of maximizing and minimizing the console in C++11 temporarily fixed the issue by resetting the buffer.[21]
+- Originally, I experimented with different console fonts and UTF-16 encoding to display special Unicode characters. However, the console struggled to render them correctly, displaying '?' instead. Using wchar_t arrays with the L prefix[32] worked in displaying Unicode characters correctly.
 
 ## Future Improvements
 - Remove nested loops from runRainAnimation()
 - Make size of console dynamic, so the rain fills all of the screen when console size is changed.
+- Add error handling when user enters anything but a char/int in the menu.
 
 ## References
 [1] Kevger (2020) DoubleBufferedWindowsConsole. GitHub. Available at: https://github.com/Kevger/DoubleBufferedWindowsConsole/blob/master/source/DoubleBufferedConsole.h
@@ -638,3 +639,15 @@ void runAllTests() {
 [25] M. Lynch "Exceptions". Lecture, ATU, Galway, ATU 2025
 
 [26] cppreference https://en.cppreference.com/w/cpp/memory/new/operator_delete
+
+[27] copypastecharacter https://copypastecharacter.com/all-characters
+
+[28] GeeksforGeeks https://www.geeksforgeeks.org/enumeration-in-cpp/
+
+[29] GeeksforGeeks https://www.geeksforgeeks.org/inline-functions-cpp/
+
+[30] cppreference vector https://en.cppreference.com/w/cpp/container/vector
+
+[31] GeeksforGeeks https://www.geeksforgeeks.org/implementing-race-condition-in-c/
+
+[32] cppreference string_literal https://en.cppreference.com/w/c/language/string_literal
